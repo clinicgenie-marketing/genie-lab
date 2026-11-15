@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Generated from design-system/ by scripts/build-design-system.ts
+src/styles/generated/
+
+# Local development data (progress, submissions, uploads)
+.data/
+
+# Tests
+test-results/
+playwright-report/
+blob-report/
+
+# Environment
+.env*.local
+.DS_Store

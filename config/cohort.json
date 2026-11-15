@@ -1,0 +1,8 @@
+{
+  "status": "placeholder",
+  "note": "Time zone confirmed on 15 November 2026. Start date, working days and non-working dates are not yet supplied; until startDate is set, no day opens.",
+  "timeZone": "Asia/Singapore",
+  "startDate": null,
+  "workingDays": ["Mon", "Tue", "Wed", "Thu", "Fri"],
+  "nonWorkingDates": []
+}
