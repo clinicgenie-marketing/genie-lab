@@ -168,10 +168,15 @@ body { background: var(--outer); }
 /* Status badges (decision 3). Icons sit before the word. */
 .gl-badge { gap: var(--space-1); }
 .gl-badge svg { flex: none; }
-/* Review decision: a tag with `radius-input` corners and a control edge. */
+/*
+ * Decision 3, revised (b): the three kinds differ by fill, outline and icon.
+ *   Lesson progress  filled pill, no outline (the design system's Badge)
+ *   Review decision  outlined tag: a `border-control` edge; "Not submitted" on `surface`
+ *   Day access       no container: icon and word only
+ */
 .gl-tag { border-radius: var(--radius-input); box-shadow: inset 0 0 0 1px var(--border-control); }
-/* Day access: an outlined chip on `surface`. */
-.gl-chip { background: var(--surface); box-shadow: inset 0 0 0 1px var(--border-control); }
+.gl-tag:not(.ob-badge--awaiting):not(.ob-badge--changes):not(.ob-badge--accepted) { background: var(--surface); }
+.gl-chip { background: transparent; box-shadow: none; padding-left: 0; padding-right: 0; }
 /* A badge inside a pastel row keeps a `surface` fill so it stays distinct (LessonRow guideline). */
 .ob-row--current .ob-badge:not(.ob-badge--progress):not(.ob-badge--complete) { background: var(--surface); }
 
@@ -226,3 +231,141 @@ body { background: var(--outer); }
 @media (max-width: 767.98px) {
   .ob-card { padding: var(--space-5); }
 }
+
+/* ---------- Phase 3: lesson screen ---------- */
+
+/* Layout (decision 4): 1280px+ outline rail 240 | reading | task 280; 1024-1279 reading | task; below 1024 tabs. */
+.gl-lesson { display: grid; gap: var(--space-8); grid-template-columns: 240px minmax(0, 1fr) 280px; align-items: start; }
+.gl-lesson__rail, .gl-lesson__task { position: sticky; top: var(--space-6); max-height: calc(100vh - var(--space-12)); overflow-y: auto; }
+.gl-lesson__main { min-width: 0; }
+.gl-reading { max-width: var(--width-prose); display: flex; flex-direction: column; gap: var(--space-8); }
+.gl-outline-button { display: none; }
+@media (max-width: 1279.98px) {
+  .gl-lesson { grid-template-columns: minmax(0, 1fr) 280px; gap: var(--space-6); }
+  .gl-lesson__rail { display: none; }
+  .gl-outline-button { display: inline-flex; }
+}
+@media (max-width: 1023.98px) {
+  .gl-lesson { grid-template-columns: minmax(0, 1fr); }
+  .gl-lesson__task { position: static; max-height: none; }
+}
+
+.gl-lesson-head { display: flex; flex-direction: column; gap: var(--space-2); }
+.gl-lesson-head h1 { overflow-wrap: anywhere; }
+.gl-intro { display: flex; flex-direction: column; gap: var(--space-4); }
+.gl-introcard > summary { cursor: pointer; list-style-position: inside; }
+.gl-introcard > summary::marker { font-size: 0.9em; }
+.gl-introcard[open] > summary { margin-bottom: var(--space-3); }
+.gl-before { margin: 0; display: grid; grid-template-columns: 1fr; gap: var(--space-1); }
+.gl-before dt { color: var(--text-secondary); margin-top: var(--space-3); }
+.gl-before dt:first-child { margin-top: 0; }
+.gl-before dd { margin: 0; }
+.gl-section-body { display: flex; flex-direction: column; gap: var(--space-5); }
+.gl-section-title { scroll-margin-top: var(--space-6); }
+.gl-section-title:focus { outline: none; }
+.gl-section-title:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.gl-further { display: flex; flex-direction: column; gap: var(--space-3); padding-top: var(--space-6); }
+
+/* Lesson prose: `lesson-body` on the canvas, never in cards. */
+.gl-prose { font-size: 1.0625rem; line-height: 1.8125rem; display: flex; flex-direction: column; gap: var(--space-4); }
+.gl-prose > * { margin: 0; }
+.gl-prose h3 { margin-top: var(--space-6); }
+.gl-prose h4 { margin-top: var(--space-4); font-size: 1.0625rem; line-height: 1.8125rem; }
+.gl-prose ul, .gl-prose ol { padding-left: var(--space-6); display: flex; flex-direction: column; gap: var(--space-2); }
+.gl-prose li > .gl-prose, .gl-prose li > p { margin: 0; }
+.gl-prose blockquote { margin: 0; padding: var(--space-4) var(--space-5); border-radius: var(--radius-code); background: var(--surface-muted); }
+.gl-prose blockquote > * { margin: 0; }
+.gl-prose blockquote > * + * { margin-top: var(--space-2); }
+.gl-prose hr { border: 0; border-top: 1px solid var(--border-subtle); width: 100%; }
+.gl-prose--compact { font-size: 0.9375rem; line-height: 1.4375rem; gap: var(--space-3); }
+@media (max-width: 767.98px) {
+  .gl-prose { font-size: 1rem; line-height: 1.75rem; }
+}
+
+/* Tables: scroll inside their frame from 720px; stacked cards below 720px. */
+.gl-table { max-width: 100%; overflow-x: auto; border-radius: var(--radius-code); background: var(--surface); box-shadow: inset 0 0 0 1px var(--border-subtle); }
+.gl-table table { border-collapse: collapse; width: 100%; font-size: 0.9375rem; line-height: 1.4375rem; }
+.gl-table th, .gl-table td { padding: var(--space-3) var(--space-4); text-align: left; vertical-align: top; border-bottom: 1px solid var(--border-subtle); }
+.gl-table th { font-size: 0.875rem; line-height: 1.25rem; font-weight: 600; }
+.gl-table tbody tr:last-child td { border-bottom: 0; }
+@media (max-width: 719.98px) {
+  .gl-table { overflow: visible; background: transparent; box-shadow: none; }
+  .gl-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+  .gl-table table, .gl-table tbody, .gl-table tr, .gl-table td { display: block; width: 100%; }
+  .gl-table tr { background: var(--surface); border-radius: var(--radius-code); box-shadow: inset 0 0 0 1px var(--border-subtle); padding: var(--space-2) 0; }
+  .gl-table tr + tr { margin-top: var(--space-3); }
+  .gl-table td { border-bottom: 0; padding: var(--space-2) var(--space-4); }
+  .gl-table td[data-label]::before { content: attr(data-label); display: block; font-size: 0.8125rem; line-height: 1.1875rem; font-weight: 600; color: var(--text-secondary); }
+}
+
+/* Code cards (the design system's CodePanel). */
+.gl-code { margin: 0; display: flex; flex-direction: column; gap: var(--space-1); }
+.gl-code__label { display: inline-flex; align-items: center; gap: var(--space-2); margin: 0; color: var(--on-shell); }
+.gl-code__note { padding: var(--space-3) var(--space-5) 0; font-size: 0.8125rem; line-height: 1.1875rem; color: var(--surface-muted); }
+.gl-code__pre { margin: 0; padding: var(--space-4) var(--space-5); overflow-x: auto; font-family: var(--font-code); font-size: 0.875rem; line-height: 1.4375rem; }
+.gl-code__pre--wrap { white-space: pre-wrap; overflow-wrap: anywhere; }
+.gl-code__pre:focus-visible { outline-offset: -3px; }
+.gl-ph { background: var(--butter); color: var(--ink); }
+.gl-code__status { min-height: 1.1875rem; color: var(--text-secondary); }
+@media (max-width: 767.98px) {
+  .gl-code__pre { font-size: 0.8125rem; line-height: 1.375rem; padding: var(--space-3) var(--space-4); }
+}
+.gl-inline-code { white-space: pre-wrap; }
+
+/* Section navigation at the foot of each section. */
+.gl-secnav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3); padding-top: var(--space-4); border-top: 1px solid var(--border-subtle); }
+
+/* Tabs below 1024px. */
+.gl-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-1); padding: var(--space-1); margin-bottom: var(--space-6); border-radius: var(--radius-pill); background: var(--surface-muted); }
+.gl-tabs [role="tab"] {
+  display: inline-flex; flex-direction: column; align-items: center; justify-content: center; min-height: var(--height-control-large);
+  padding: var(--space-1) var(--space-3); border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--ink);
+  font-family: var(--font-body); font-size: 0.875rem; line-height: 1.25rem; font-weight: 600; cursor: pointer;
+}
+.gl-tabs [role="tab"][aria-selected="true"] { background: var(--ink); color: var(--on-shell); }
+.gl-tabs__count { font-size: 0.8125rem; line-height: 1.1875rem; font-weight: 500; }
+
+/* Outline (rail and drawer). */
+.gl-outline { display: flex; flex-direction: column; gap: var(--space-6); }
+.gl-outline section { display: flex; flex-direction: column; gap: var(--space-2); }
+.gl-outline__heading { margin: 0; color: var(--text-secondary); }
+.gl-outline__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-1); }
+.gl-outline__list a, .gl-outline__self {
+  display: block; padding: var(--space-2) var(--space-3); border-radius: var(--radius-input); color: var(--ink);
+  font-size: 0.875rem; line-height: 1.25rem; text-decoration: none;
+}
+.gl-outline__list a { min-height: var(--height-control); }
+.gl-outline__list a:hover { background: var(--surface-muted); text-decoration: underline; }
+.gl-outline__list a[aria-current] { background: var(--ink); color: var(--on-shell); font-weight: 600; }
+.gl-outline__num { font-weight: 600; }
+.gl-outline__self { color: var(--text-secondary); }
+.gl-outline__status { display: block; font-size: 0.8125rem; line-height: 1.1875rem; color: var(--text-secondary); }
+.gl-outline__list a[aria-current] .gl-outline__status { color: var(--on-shell); }
+
+/* Drawer on the native dialog. */
+.gl-drawer { margin: 0 0 0 auto; padding: 0; border: 0; width: min(var(--width-drawer), 100%); max-width: 100%; height: 100%; max-height: 100%; background: transparent; }
+.gl-drawer::backdrop { background: var(--scrim); }
+.gl-drawer__panel { min-height: 100%; overflow-y: auto; }
+.gl-drawer[open] .gl-drawer__panel { animation: gl-drawer-in var(--duration-overlay) ease-out; }
+@keyframes gl-drawer-in { from { transform: translateX(var(--space-6)); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (max-width: 767.98px) {
+  .gl-drawer { width: 100%; }
+  .gl-drawer__panel { border-radius: 0; }
+}
+
+/* Your task */
+.gl-task { display: flex; flex-direction: column; gap: var(--space-4); }
+.gl-task__head { display: flex; flex-direction: column; gap: var(--space-1); }
+.gl-task__count { color: var(--text-secondary); }
+.gl-task__note { margin: 0; }
+.gl-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.gl-step { display: flex; flex-direction: column; gap: var(--space-2); }
+.gl-step .ob-check { align-items: flex-start; }
+.gl-step .ob-check input { margin: 2px 0 0; flex: none; cursor: pointer; }
+.gl-step label { cursor: pointer; font-size: 0.9375rem; line-height: 1.5rem; }
+.gl-step__num { font-weight: 600; }
+.gl-step__more { padding-left: calc(var(--icon-size) + var(--space-3)); }
+.gl-save { min-height: 1.1875rem; color: var(--text-secondary); }
+.gl-save--error:empty { display: none; }
+.gl-lesson__task .gl-task, .gl-lesson__taskpanel .gl-task { padding: var(--space-5); border-radius: var(--radius-card); background: var(--surface); box-shadow: inset 0 0 0 1px var(--border-subtle); }
+.gl-taskpage { max-width: var(--width-prose); display: flex; flex-direction: column; gap: var(--space-6); }

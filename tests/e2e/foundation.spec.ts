@@ -144,8 +144,8 @@ test.describe("lesson bar", () => {
     const crumbs = page.getByRole("navigation", { name: "Breadcrumb" });
     await expect(crumbs.getByRole("link", { name: "Syllabus" })).toBeVisible();
     await expect(crumbs.locator('[aria-current="page"]')).toHaveText("Lesson 4.2: Planning Small Tasks with Clear Acceptance Criteria");
-    await expect(page.getByRole("link", { name: "Help" })).toHaveAttribute("href", "/help");
-    await expect(page.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/home");
+    await expect(page.getByRole("banner").getByRole("link", { name: "Help", exact: true })).toHaveAttribute("href", "/help");
+    await expect(page.getByRole("banner").getByRole("link", { name: "Home", exact: true })).toHaveAttribute("href", "/home");
   });
 
   test("icon buttons show a tooltip on keyboard focus and hide it with Escape", async ({ page }) => {

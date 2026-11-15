@@ -1,0 +1,75 @@
+"use client";
+
+import { useEffect, useId, useRef, type ReactNode } from "react";
+import { X } from "lucide-react";
+
+/**
+ * A modal drawer from the right, built on the native <dialog>: showModal() contains focus,
+ * makes the page inert and closes on Escape. Focus returns to whatever opened it.
+ * Used for the lesson Outline and, in Phase 5, the Help drawer.
+ */
+export function Drawer({ open, onClose, title, children }: { open: boolean; onClose: () => void; title: string; children: ReactNode }) {
+  const ref = useRef<HTMLDialogElement>(null);
+  const returnTo = useRef<HTMLElement | null>(null);
+  const titleId = useId();
+
+  useEffect(() => {
+    const dialog = ref.current;
+    if (!dialog) return;
+    if (open && !dialog.open) {
+      returnTo.current = document.activeElement as HTMLElement | null;
+      dialog.showModal();
+    } else if (!open && dialog.open) {
+      dialog.close();
+    }
+  }, [open]);
+
+  return (
+    <dialog
+      ref={ref}
+      className="gl-drawer"
+      aria-labelledby={titleId}
+      onClose={() => {
+        onClose();
+        returnTo.current?.focus();
+      }}
+      onCancel={(e) => {
+        e.preventDefault();
+        onClose();
+      }}
+      onClick={(e) => {
+        // A click on the backdrop lands on the dialog element itself.
+        if (e.target === e.currentTarget) onClose();
+      }}
+      onKeyDown={(e) => {
+        // Keep Tab inside the drawer. The native modal dialog makes the page inert, but
+        // Chrome still lets Tab leave for the browser's own controls.
+        if (e.key !== "Tab") return;
+        const focusable = [...e.currentTarget.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])')];
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!first || !last) return;
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }}
+    >
+      <div className="ob-drawer gl-drawer__panel">
+        <div className="ob-drawer__head">
+          <h2 id={titleId} className="ob-h t-card-title">
+            {title}
+          </h2>
+          <button type="button" className="ob-btn ob-btn--secondary" onClick={onClose}>
+            <X size={20} aria-hidden="true" focusable="false" />
+            Close
+          </button>
+        </div>
+        {children}
+      </div>
+    </dialog>
+  );
+}

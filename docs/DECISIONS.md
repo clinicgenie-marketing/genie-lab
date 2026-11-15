@@ -19,9 +19,9 @@ Decisions that settle conflicts between the design system (`design-system/README
 
 | # | Topic | Decision |
 |---|---|---|
-| 1 | Navigation on narrow screens | Follow the design system: Home, Syllabus, My work and Toolkit stay visible as text at every width. Below 1024 px they wrap onto their own full-width row (`ob-topbar--compact`); Help, Settings and the avatar move into an accessible menu when space runs out. No hamburger menu for the four items |
+| 1 | Navigation on narrow screens | Follow the design system: Home, Syllabus, My work and Toolkit stay visible as text at every width. Below 1024 px they wrap onto their own full-width row (`ob-topbar--compact`). Below 768 px Settings and the avatar move into an accessible account menu; Help stays in the bar at every width because it fits (changed in Phase 1). No hamburger menu for the four items |
 | 2 | Lesson screen bar | Use the focused lesson bar from the brief and IA plan (back link to the day, breadcrumb, "Section 3 of 9" with progress, Outline, Help, Home) instead of the four-item top bar |
-| 3 | Badge shapes | Lesson progress: pill (`radius-pill`) with a round icon and a word. Review decision: tag with `radius-input` corners, an icon and a word. Day access: day chip. Colours follow the design system's status vocabulary |
+| 3 | Badge treatments (revised in Phase 3, option b) | The design system has no radius below 14px, so a tag cannot look rectangular at badge height. The three kinds differ by fill, outline and icon instead. Lesson progress: filled pill with a round icon and a word, no outline. Review decision: outlined tag (`border-control` edge), "Not submitted" on `surface`, an icon and a word. Day access: icon and word with no container. Colours follow the design system's status vocabulary |
 | 4 | Lesson widths at 1280 px and over | Outline rail 240 px, Your task panel 280 px, reading column takes the remaining width up to `width-prose` |
 | 5 | Breakpoints | Layout changes at 1280 and 1024 px (IA plan). Frame, type scale and gutters change at 1200 and 768 px (design system). At 720 px: one column, `-sm` type styles, `gutter-mobile` |
 | 6 | Submission badge | Evidence from lessons that are not review points shows "Submitted" (`lavender`) |

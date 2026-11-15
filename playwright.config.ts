@@ -18,11 +18,12 @@ export default defineConfig({
   // Tests run against a production build. Build first with `npm run build`.
   webServer: [
     {
-      command: `npx next start -p ${PORT}`,
+      // Progress written by the tests goes to a throwaway folder, cleared on every run.
+      command: `rm -rf .data/e2e && npx next start -p ${PORT}`,
       url: `http://localhost:${PORT}/home`,
       reuseExistingServer: false,
       timeout: 60_000,
-      env: { GENIE_LAB_DEV: "1", GENIE_LAB_DEV_COHORT_START: "2026-11-16", GENIE_LAB_DEV_TODAY: "2026-11-18" },
+      env: { GENIE_LAB_DEV: "1", GENIE_LAB_DEV_COHORT_START: "2026-11-16", GENIE_LAB_DEV_TODAY: "2026-11-18", GENIE_LAB_DATA_DIR: ".data/e2e" },
     },
     {
       command: `npx next start -p ${UNSCHEDULED_PORT}`,
