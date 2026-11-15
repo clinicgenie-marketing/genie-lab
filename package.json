@@ -13,7 +13,7 @@
     "generate": "npm run --silent design-system && npm run --silent content",
     "predev": "npm run generate",
     "dev": "next dev",
-    "prebuild": "npm run generate",
+    "prebuild": "npm run generate && node scripts/db-migrate.ts --if-configured",
     "build": "next build",
     "start": "next start",
     "pretypecheck": "npm run generate",
