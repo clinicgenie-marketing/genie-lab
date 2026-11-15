@@ -20,7 +20,7 @@ With `DATABASE_URL` set, students sign in with an email and password (Better Aut
 
 1. Create a Neon project and copy its connection string.
 2. Set `DATABASE_URL`, `BETTER_AUTH_SECRET` and `BETTER_AUTH_URL` (see `.env.example`) where the app runs.
-3. Create the tables once, and again after each update:
+3. Create the tables. Each build runs this automatically when `DATABASE_URL` is set (on Vercel, every deployment), so by hand it is only needed elsewhere:
 
 ```bash
 DATABASE_URL='postgresql://…neon.tech/neondb?sslmode=require' npm run db:migrate

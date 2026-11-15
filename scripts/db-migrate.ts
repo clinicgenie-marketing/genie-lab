@@ -13,7 +13,15 @@ import { connect } from "./db.ts";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 async function main() {
+  // During a build without a database (local builds, CI) there is nothing to migrate.
+  if (process.argv.includes("--if-configured") && !process.env.DATABASE_URL) {
+    console.log("No DATABASE_URL: skipping database migrations.");
+    return;
+  }
   const { pool, auth } = connect();
+  // One migration at a time, even when several deployments build together.
+  const lock = await pool.connect();
+  await lock.query("select pg_advisory_lock(hashtextextended('genie-lab:migrations', 0))");
   try {
     const { runMigrations, toBeCreated, toBeAdded } = await getMigrations(auth.options);
     if (toBeCreated.length || toBeAdded.length) {
@@ -42,6 +50,8 @@ async function main() {
     }
     console.log("Database is up to date.");
   } finally {
+    await lock.query("select pg_advisory_unlock(hashtextextended('genie-lab:migrations', 0))").catch(() => undefined);
+    lock.release();
     await pool.end();
   }
 }

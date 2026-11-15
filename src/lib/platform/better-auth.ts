@@ -13,7 +13,12 @@ export function createAuth(db: Pool) {
     appName: "Genie Lab",
     database: db,
     secret: process.env.BETTER_AUTH_SECRET,
-    baseURL: process.env.BETTER_AUTH_URL,
+    // Production sets BETTER_AUTH_URL. Vercel previews each have their own address, so
+    // there the deployment's own URL is used and its branch URL is trusted too.
+    baseURL: process.env.BETTER_AUTH_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined),
+    trustedOrigins: [process.env.VERCEL_URL, process.env.VERCEL_BRANCH_URL, process.env.VERCEL_PROJECT_PRODUCTION_URL]
+      .filter((h): h is string => Boolean(h))
+      .map((h) => `https://${h}`),
     emailAndPassword: {
       enabled: true,
       // Supervisors create accounts; nobody can sign themselves up.
