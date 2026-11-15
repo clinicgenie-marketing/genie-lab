@@ -59,5 +59,3 @@ export class LocalFileStorage implements FileStorage {
   }
 }
 
-const g = globalThis as unknown as { __genieFiles?: FileStorage };
-export const fileStorage: FileStorage = (g.__genieFiles ??= new LocalFileStorage());

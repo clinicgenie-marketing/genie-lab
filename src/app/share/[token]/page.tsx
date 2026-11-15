@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { connection } from "next/server";
 import { notFound } from "next/navigation";
 import { getLesson } from "@/lib/content/curriculum";
-import { workStore } from "@/lib/platform/work";
 import { submissionsFor } from "@/lib/work-rules";
 import { PageHeader } from "@/components/PageHeader";
 import { EvidenceView } from "@/components/work/EvidenceView";
 import { ShareShell } from "./shell";
+import { workStore } from "@/lib/platform/stores";
 
 export const metadata: Metadata = {
   title: "Shared submission",

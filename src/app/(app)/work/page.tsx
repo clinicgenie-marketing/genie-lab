@@ -3,12 +3,13 @@ import { connection } from "next/server";
 import { reviewPointFor } from "@/lib/config";
 import { lessons } from "@/lib/content/curriculum";
 import { auth } from "@/lib/platform/auth";
-import { emptyWork, workStore } from "@/lib/platform/work";
+import { emptyWork } from "@/lib/platform/work";
 import { getProgrammeView, nextLesson } from "@/lib/programme";
 import { latestSubmission, reviewState, submissionsFor, type ReviewState } from "@/lib/work-rules";
 import { dateTime } from "@/components/work/EvidenceView";
 import { PageHeader } from "@/components/PageHeader";
 import { ReviewTag, SubmissionBadge } from "@/components/StatusBadges";
+import { workStore } from "@/lib/platform/stores";
 
 export const metadata = { title: "My work" };
 

@@ -2,14 +2,14 @@
 
 import { z } from "zod";
 import { auth } from "@/lib/platform/auth";
-import { progressStore, type LessonProgress } from "@/lib/platform/progress";
+import { type LessonProgress } from "@/lib/platform/progress";
 import { getLessonAccess } from "@/lib/lesson-access";
 import { chooseCriterion, emptyProgress, markComplete, recordVisit, setCriterion, setStep } from "@/lib/progress-rules";
 import { revalidatePath } from "next/cache";
 import { lessonIdToSlug } from "@/lib/content/curriculum";
 import { checkState } from "@/lib/lesson-state";
-import { workStore } from "@/lib/platform/work";
 import { completion, latestSubmission } from "@/lib/work-rules";
+import { progressStore, workStore } from "@/lib/platform/stores";
 
 export type ProgressResult = { ok: true; progress: LessonProgress } | { ok: false; error: "not_signed_in" | "not_available" | "invalid" | "save_failed" };
 

@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { X } from "lucide-react";
 import { trapTab } from "@/lib/hooks/trapTab";
+import { returnTarget, trackLastPressed } from "@/lib/hooks/lastPressed";
 
 /**
  * A modal drawer from the right, built on the native <dialog>: showModal() contains focus,
@@ -14,11 +15,13 @@ export function Drawer({ open, onClose, title, children }: { open: boolean; onCl
   const returnTo = useRef<HTMLElement | null>(null);
   const titleId = useId();
 
+  useEffect(() => trackLastPressed(), []);
+
   useEffect(() => {
     const dialog = ref.current;
     if (!dialog) return;
     if (open && !dialog.open) {
-      returnTo.current = document.activeElement as HTMLElement | null;
+      returnTo.current = returnTarget();
       dialog.showModal();
     } else if (!open && dialog.open) {
       dialog.close();
@@ -32,7 +35,8 @@ export function Drawer({ open, onClose, title, children }: { open: boolean; onCl
       aria-labelledby={titleId}
       onClose={() => {
         onClose();
-        returnTo.current?.focus();
+        // Return focus without scrolling, so closing keeps the reader's place on the page.
+        returnTo.current?.focus({ preventScroll: true });
       }}
       onCancel={(e) => {
         e.preventDefault();

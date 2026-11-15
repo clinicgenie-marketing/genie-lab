@@ -7,9 +7,10 @@ import { lessonIdToSlug } from "@/lib/content/curriculum";
 import { COMMIT, isHttpUrl } from "@/lib/evidence-rules";
 import { getLessonAccess } from "@/lib/lesson-access";
 import { auth } from "@/lib/platform/auth";
-import { fileStorage, FileRefusedError, type FileRef } from "@/lib/platform/files";
-import { DECISIONS, newId, newShareToken, workStore, type DraftItem, type EvidenceItem } from "@/lib/platform/work";
+import { FileRefusedError, type FileRef } from "@/lib/platform/files";
+import { DECISIONS, newId, newShareToken, type DraftItem, type EvidenceItem } from "@/lib/platform/work";
 import { latestSubmission, nextVersion } from "@/lib/work-rules";
+import { fileStorage, workStore } from "@/lib/platform/stores";
 
 type Fail = { ok: false; error: string };
 const fail = (error: string): Fail => ({ ok: false, error });

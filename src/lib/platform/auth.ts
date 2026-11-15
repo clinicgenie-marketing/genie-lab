@@ -1,7 +1,11 @@
 /**
- * Sign-in sits behind this interface. Version 1 has no sign-in page; the hosting and
- * sign-in provider are not chosen yet, so only the local development adapter exists.
+ * Who is signed in. With DATABASE_URL set, student accounts come from Better Auth (email and
+ * password, stored in Neon). Without it, local development signs in a single development
+ * intern when GENIE_LAB_DEV=1.
  */
+import { isDatabaseMode, pool } from "./db";
+import type { Auth } from "./better-auth";
+
 export type Intern = {
   id: string;
   /** The intern's name, or null when it has not been set. Never invented. */
@@ -13,10 +17,7 @@ export interface AuthProvider {
   getCurrentIntern(): Promise<Intern | null>;
 }
 
-/**
- * Local development only. Active when GENIE_LAB_DEV=1. The name comes from
- * GENIE_LAB_DEV_NAME and stays null when that is unset.
- */
+/** Local development only. Active when GENIE_LAB_DEV=1 and no database is configured. */
 export class DevAuthProvider implements AuthProvider {
   async getCurrentIntern(): Promise<Intern | null> {
     if (process.env.GENIE_LAB_DEV !== "1") return null;
@@ -25,7 +26,25 @@ export class DevAuthProvider implements AuthProvider {
   }
 }
 
-export const auth: AuthProvider = new DevAuthProvider();
+const g = globalThis as unknown as { __genieBetterAuth?: Promise<Auth> };
+
+/** The Better Auth instance, created once per server process. Database mode only. */
+export function betterAuthInstance(): Promise<Auth> {
+  g.__genieBetterAuth ??= import("./better-auth").then((m) => m.createAuth(pool()));
+  return g.__genieBetterAuth;
+}
+
+/** Student accounts in Neon: reads the session cookie on the current request. */
+export class BetterAuthProvider implements AuthProvider {
+  async getCurrentIntern(): Promise<Intern | null> {
+    const { headers } = await import("next/headers");
+    const session = await (await betterAuthInstance()).api.getSession({ headers: await headers() });
+    if (!session) return null;
+    return { id: session.user.id, name: session.user.name?.trim() || null };
+  }
+}
+
+export const auth: AuthProvider = isDatabaseMode() ? new BetterAuthProvider() : new DevAuthProvider();
 
 /** "Ada Lovelace" becomes "AL"; one word gives one letter; no name gives null. */
 export function initials(name: string | null): string | null {

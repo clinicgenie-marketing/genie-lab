@@ -64,5 +64,3 @@ export class LocalJsonProgressStore implements ProgressStore {
   }
 }
 
-const globalStore = globalThis as unknown as { __genieProgressStore?: ProgressStore };
-export const progressStore: ProgressStore = (globalStore.__genieProgressStore ??= new LocalJsonProgressStore());

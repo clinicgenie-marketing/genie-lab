@@ -1,6 +1,6 @@
 import { auth } from "@/lib/platform/auth";
-import { fileStorage } from "@/lib/platform/files";
 import { fileResponse } from "@/lib/file-response";
+import { fileStorage } from "@/lib/platform/stores";
 
 /** The signed-in intern's own evidence files. */
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {

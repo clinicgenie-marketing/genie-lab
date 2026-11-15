@@ -142,9 +142,9 @@ describe("local stores", () => {
     const store = new LocalJsonWorkStore(mkdtempSync(join(tmpdir(), "genie-work-")));
     const token = newShareToken();
     expect(token).toMatch(/^[A-Za-z0-9_-]{32}$/);
-    await store.update("dev-intern", (w) => ({ next: { ...w, shares: [{ token, lessonId: "2.4", createdAt: "t", revokedAt: null }] }, result: null }));
+    await store.update("dev-intern", (w) => ({ next: { ...w, shares: [{ token, lessonId: "2.4", createdAt: "2026-11-18T10:00:00Z", revokedAt: null }] }, result: null }));
     expect(await store.findShare(token)).toMatchObject({ internId: "dev-intern", share: { lessonId: "2.4" } });
-    await store.update("dev-intern", (w) => ({ next: { ...w, shares: w.shares.map((s) => ({ ...s, revokedAt: "t2" })) }, result: null }));
+    await store.update("dev-intern", (w) => ({ next: { ...w, shares: w.shares.map((s) => ({ ...s, revokedAt: "2026-11-18T11:00:00Z" })) }, result: null }));
     expect(await store.findShare(token)).toBeNull();
     expect(await store.findShare("not-a-token")).toBeNull();
   });

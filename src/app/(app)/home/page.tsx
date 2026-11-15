@@ -3,14 +3,15 @@ import { connection } from "next/server";
 import { getLesson } from "@/lib/content/curriculum";
 import { getIdentity } from "@/lib/identity";
 import { lessonsBehind, nextUp } from "@/lib/home";
-import { progressStore, type LessonProgress } from "@/lib/platform/progress";
-import { emptyWork, workStore } from "@/lib/platform/work";
+import { type LessonProgress } from "@/lib/platform/progress";
+import { emptyWork } from "@/lib/platform/work";
 import { getProgrammeView } from "@/lib/programme";
 import { formatMinutes } from "@/lib/schedule";
 import { decisionsFor, latestSubmission, reviewState } from "@/lib/work-rules";
 import { PageHeader } from "@/components/PageHeader";
 import { DayChip, ProgressBadge, ReviewTag } from "@/components/StatusBadges";
 import { dateTime } from "@/components/work/EvidenceView";
+import { progressStore, workStore } from "@/lib/platform/stores";
 
 export const metadata = { title: "Home" };
 

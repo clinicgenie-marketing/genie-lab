@@ -1,6 +1,5 @@
-import { fileStorage } from "@/lib/platform/files";
-import { workStore } from "@/lib/platform/work";
 import { fileResponse } from "@/lib/file-response";
+import { fileStorage, workStore } from "@/lib/platform/stores";
 
 /** A file from a shared submission: only files that belong to that lesson's submitted versions. */
 export async function GET(_req: Request, { params }: { params: Promise<{ token: string; id: string }> }) {

@@ -5,8 +5,8 @@ import { lessonIdToSlug } from "@/lib/content/curriculum";
 import { isPassed, loadKnowledgeCheck } from "@/lib/knowledge-checks";
 import { getLessonAccess } from "@/lib/lesson-access";
 import { auth } from "@/lib/platform/auth";
-import { progressStore } from "@/lib/platform/progress";
 import { emptyProgress, recordAnswer } from "@/lib/progress-rules";
+import { progressStore } from "@/lib/platform/stores";
 
 export type AnswerResult =
   | { ok: true; correct: boolean; explanation: string; passed: boolean }

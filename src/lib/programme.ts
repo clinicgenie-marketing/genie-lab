@@ -6,10 +6,11 @@ import { days } from "./content/curriculum";
 import type { LessonSummary } from "./content/model";
 import { effectiveSchedule, reviewPointFor, type ReviewPoint } from "./config";
 import { auth } from "./platform/auth";
-import { progressStore, type LessonProgress } from "./platform/progress";
-import { emptyWork, workStore, type Work } from "./platform/work";
+import { type LessonProgress } from "./platform/progress";
+import { emptyWork, type Work } from "./platform/work";
 import { reviewState, type ReviewState } from "./work-rules";
 import { dayAccess, dayOpenDates, formatOpenDate, lessonStatus, type DayAccess, type LessonProgressStatus } from "./schedule";
+import { progressStore, workStore } from "./platform/stores";
 
 export type LessonView = LessonSummary & {
   status: LessonProgressStatus;
