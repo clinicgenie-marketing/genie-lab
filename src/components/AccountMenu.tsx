@@ -47,7 +47,8 @@ export function AccountMenu({ initials, name }: { initials: string | null; name:
           ref={buttonRef}
           type="button"
           className="gl-account__button"
-          aria-label="Account menu"
+          // The visible initials are part of the name (WCAG 2.5.3, label in name).
+          aria-label={initials ? `Account menu, ${initials}` : "Account menu"}
           aria-expanded={open}
           aria-controls={panelId}
           onClick={() => setOpen((v) => !v)}

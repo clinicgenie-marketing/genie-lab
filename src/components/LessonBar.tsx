@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { HelpIcon, HomeIcon } from "./icons";
+import { HomeIcon } from "./icons";
+import { HelpButton } from "./help/HelpButton";
 import type { LessonRef } from "@/lib/content/curriculum";
 import { IconLink } from "./IconLink";
 import { OutlineButton, SectionProgress } from "./lesson/LessonBarControls";
@@ -36,7 +37,7 @@ export function LessonBar({ lesson }: { lesson: LessonRef }) {
       <SectionProgress />
       <div className="ob-utils gl-lessonbar__end">
         <OutlineButton />
-        <IconLink href="/help" label="Help" icon={<HelpIcon />} />
+        <HelpButton />
         <IconLink href="/home" label="Home" icon={<HomeIcon />} />
       </div>
     </header>

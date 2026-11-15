@@ -19,6 +19,8 @@ type LessonNav = {
 };
 
 const Ctx = createContext<LessonNav | null>(null);
+/** Exported so Help can read the lesson position when it is on a lesson screen. */
+export const LessonNavContext = Ctx;
 
 export function useLessonNav(): LessonNav {
   const v = useContext(Ctx);

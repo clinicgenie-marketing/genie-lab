@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 import { mainNav, navCurrent } from "@/lib/nav";
 import { AccountMenu } from "./AccountMenu";
 import { Avatar } from "./Avatar";
-import { IconLink } from "./IconLink";
-import { HelpIcon } from "./icons";
+import { HelpButton } from "./help/HelpButton";
 
 /**
  * Top bar for every page except lessons. Left: the platform name in plain type (no logo
@@ -37,7 +36,7 @@ export function TopBar({ brand, initials, name }: { brand: string; initials: str
         </ul>
       </nav>
       <div className="ob-utils gl-topbar__utils">
-        <IconLink href="/help" label="Help" icon={<HelpIcon />} />
+        <HelpButton />
         <Link className="ob-btn ob-btn--on-dark gl-topbar__wide" href="/settings" aria-current={pathname === "/settings" ? "page" : undefined}>
           Settings
         </Link>

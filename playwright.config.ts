@@ -9,6 +9,8 @@ export const UNSCHEDULED_PORT = 3101;
  * throwaway data, and the clearly fake knowledge check fixture for Lesson 1.1.
  */
 export const WORK_PORT = 3102;
+/** Fourth server for Home, Welcome, Help, Toolkit and Settings: fresh data, today Wed 18 Nov 2026 (Day 3). */
+export const HOME_PORT = 3103;
 
 export default defineConfig({
   testDir: "tests/e2e",
@@ -42,6 +44,13 @@ export default defineConfig({
         GENIE_LAB_DATA_DIR: ".data/e2e-work",
         GENIE_LAB_KNOWLEDGE_CHECKS_DIR: "tests/fixtures/knowledge-checks",
       },
+    },
+    {
+      command: `rm -rf .data/e2e-home && npx next start -p ${HOME_PORT}`,
+      url: `http://localhost:${HOME_PORT}/home`,
+      reuseExistingServer: false,
+      timeout: 60_000,
+      env: { GENIE_LAB_DEV: "1", GENIE_LAB_DEV_COHORT_START: "2026-11-16", GENIE_LAB_DEV_TODAY: "2026-11-18", GENIE_LAB_DATA_DIR: ".data/e2e-home" },
     },
     {
       command: `npx next start -p ${UNSCHEDULED_PORT}`,
