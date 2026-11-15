@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Bricolage_Grotesque, Manrope } from "next/font/google";
 import { platform } from "@/lib/content/curriculum";
 import { SkipLink } from "@/components/SkipLink";
+import { getIdentity } from "@/lib/identity";
 import "@/styles/generated/tokens.css";
 import "@/styles/generated/ds.css";
 import "@/styles/app.css";
@@ -20,9 +21,11 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  // Text size and reduced motion are applied here, on the server, so pages never flash at the wrong size.
+  const { settings } = await getIdentity();
   return (
-    <html lang="en-GB" className={`${heading.variable} ${body.variable}`}>
+    <html lang="en-GB" className={`${heading.variable} ${body.variable}`} data-text-size={settings.textSize} data-reduced-motion={String(settings.reducedMotion)}>
       <body>
         <SkipLink />
         {children}

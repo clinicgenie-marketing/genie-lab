@@ -7,6 +7,8 @@ import { AppFrame } from "@/components/AppFrame";
 import { LessonBar } from "@/components/LessonBar";
 import { LessonNavProvider } from "@/components/lesson/LessonContext";
 import type { OutlineData } from "@/components/lesson/OutlineNav";
+import { getHelpData } from "@/lib/help-data";
+import { HelpProvider } from "@/components/help/HelpContext";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -30,7 +32,9 @@ export default async function LessonLayout({ children, params }: { children: Rea
   };
   return (
     <LessonNavProvider outline={outline}>
-      <AppFrame bar={<LessonBar lesson={summary} />}>{children}</AppFrame>
+      <HelpProvider data={await getHelpData()}>
+        <AppFrame bar={<LessonBar lesson={summary} />}>{children}</AppFrame>
+      </HelpProvider>
     </LessonNavProvider>
   );
 }

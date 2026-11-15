@@ -34,9 +34,9 @@ test.describe("every route", () => {
   }
 });
 
-test("the root address goes to Home", async ({ page }) => {
+test("the root address goes to the Welcome tour on a first visit", async ({ page }) => {
   await page.goto("/");
-  await expect(page).toHaveURL(/\/home$/);
+  await expect(page).toHaveURL(/\/welcome$/);
 });
 
 test.describe("unknown addresses return 404", () => {
@@ -101,8 +101,8 @@ test.describe("top bar", () => {
       const nav = page.getByRole("navigation", { name: "Main" });
       for (const label of MAIN_ITEMS) await expect(nav.getByRole("link", { name: label, exact: true })).toBeVisible();
       const util = page.getByRole("banner").getByRole("link", { name: "Settings" });
-      const menu = page.getByRole("button", { name: "Account menu" });
-      await expect(page.getByRole("banner").getByRole("link", { name: "Help" })).toBeVisible();
+      const menu = page.getByRole("button", { name: /^Account menu/ });
+      await expect(page.getByRole("banner").getByRole("button", { name: "Help" })).toBeVisible();
       if (width < 768) {
         await expect(util).toBeHidden();
         await expect(menu).toBeVisible();
@@ -116,7 +116,7 @@ test.describe("top bar", () => {
   test("account menu opens, closes with Escape and returns focus", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 800 });
     await page.goto("/home");
-    const button = page.getByRole("button", { name: "Account menu" });
+    const button = page.getByRole("button", { name: /^Account menu/ });
     await expect(button).toHaveAttribute("aria-expanded", "false");
     await button.click();
     await expect(button).toHaveAttribute("aria-expanded", "true");
@@ -131,7 +131,7 @@ test.describe("top bar", () => {
     await button.click();
     await page.getByRole("link", { name: "Settings" }).click();
     await expect(page).toHaveURL(/\/settings$/);
-    await expect(page.getByRole("button", { name: "Account menu" })).toHaveAttribute("aria-expanded", "false");
+    await expect(page.getByRole("button", { name: /^Account menu/ })).toHaveAttribute("aria-expanded", "false");
   });
 });
 
@@ -143,7 +143,7 @@ test.describe("lesson bar", () => {
     const crumbs = page.getByRole("navigation", { name: "Breadcrumb" });
     await expect(crumbs.getByRole("link", { name: "Syllabus" })).toBeVisible();
     await expect(crumbs.locator('[aria-current="page"]')).toHaveText("Lesson 4.2: Planning Small Tasks with Clear Acceptance Criteria");
-    await expect(page.getByRole("banner").getByRole("link", { name: "Help", exact: true })).toHaveAttribute("href", "/help");
+    await expect(page.getByRole("banner").getByRole("button", { name: "Help", exact: true })).toHaveAttribute("aria-haspopup", "dialog");
     await expect(page.getByRole("banner").getByRole("link", { name: "Home", exact: true })).toHaveAttribute("href", "/home");
   });
 
