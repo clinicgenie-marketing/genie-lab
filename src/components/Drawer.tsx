@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { X } from "lucide-react";
+import { trapTab } from "@/lib/hooks/trapTab";
 
 /**
  * A modal drawer from the right, built on the native <dialog>: showModal() contains focus,
@@ -41,22 +42,7 @@ export function Drawer({ open, onClose, title, children }: { open: boolean; onCl
         // A click on the backdrop lands on the dialog element itself.
         if (e.target === e.currentTarget) onClose();
       }}
-      onKeyDown={(e) => {
-        // Keep Tab inside the drawer. The native modal dialog makes the page inert, but
-        // Chrome still lets Tab leave for the browser's own controls.
-        if (e.key !== "Tab") return;
-        const focusable = [...e.currentTarget.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])')];
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (!first || !last) return;
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }}
+      onKeyDown={trapTab}
     >
       <div className="ob-drawer gl-drawer__panel">
         <div className="ob-drawer__head">

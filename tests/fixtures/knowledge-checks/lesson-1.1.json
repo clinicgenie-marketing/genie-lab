@@ -1,0 +1,10 @@
+{
+  "lessonId": "1.1",
+  "questions": [
+    { "id": "q1", "prompt": "TEST FIXTURE question 1. Pick option B.", "options": [{ "id": "a", "text": "Option A" }, { "id": "b", "text": "Option B" }, { "id": "c", "text": "Option C" }], "correctOptionId": "b", "explanation": "TEST FIXTURE: option B is correct." },
+    { "id": "q2", "prompt": "TEST FIXTURE question 2. Pick option A.", "options": [{ "id": "a", "text": "Option A" }, { "id": "b", "text": "Option B" }, { "id": "c", "text": "Option C" }], "correctOptionId": "a", "explanation": "TEST FIXTURE: option A is correct." },
+    { "id": "q3", "prompt": "TEST FIXTURE question 3. Pick option C.", "options": [{ "id": "a", "text": "Option A" }, { "id": "b", "text": "Option B" }, { "id": "c", "text": "Option C" }], "correctOptionId": "c", "explanation": "TEST FIXTURE: option C is correct." },
+    { "id": "q4", "prompt": "TEST FIXTURE question 4. Pick option D.", "options": [{ "id": "a", "text": "Option A" }, { "id": "b", "text": "Option B" }, { "id": "c", "text": "Option C" }, { "id": "d", "text": "Option D" }], "correctOptionId": "d", "explanation": "TEST FIXTURE: option D is correct." },
+    { "id": "q5", "prompt": "TEST FIXTURE question 5. Pick option A.", "options": [{ "id": "a", "text": "Option A" }, { "id": "b", "text": "Option B" }, { "id": "c", "text": "Option C" }], "correctOptionId": "a", "explanation": "TEST FIXTURE: option A is correct." }
+  ]
+}

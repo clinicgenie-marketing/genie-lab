@@ -10,8 +10,7 @@ const APP_ROUTES = [
   "/toolkit/project-kit", "/toolkit/statuses", "/help", "/settings",
 ];
 const LESSON_ROUTES = ["/lesson/1-1", "/lesson/4-2", "/lesson/4-2/task", "/lesson/4-2/submit", "/lesson/4-2/check", "/lesson/10-4"];
-const OTHER_ROUTES = ["/share/example-token"];
-const ALL = [...APP_ROUTES, ...LESSON_ROUTES, ...OTHER_ROUTES];
+const ALL = [...APP_ROUTES, ...LESSON_ROUTES];
 
 async function axe(page: Page) {
   const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
@@ -161,7 +160,7 @@ test.describe("lesson bar", () => {
 });
 
 test.describe("no sideways scrolling", () => {
-  for (const route of ["/home", "/syllabus", "/day/3", "/day/7", "/toolkit/project-kit", "/lesson/4-2", "/lesson/10-4/submit", "/share/example-token"]) {
+  for (const route of ["/home", "/syllabus", "/day/3", "/day/7", "/toolkit/project-kit", "/lesson/4-2", "/lesson/10-4/submit"]) {
     for (const width of WIDTHS) {
       test(`${route} at ${width}px`, async ({ page }) => {
         await page.setViewportSize({ width, height: 800 });
@@ -182,10 +181,15 @@ test.describe("narrow screens pass axe", () => {
   }
 });
 
-test("shared submission pages are kept out of search engines", async ({ page }) => {
+test("an unknown share link is a 404, kept out of search engines, with no navigation", async ({ page }) => {
   const res = await page.goto("/share/example-token");
+  expect(res?.status()).toBe(404);
   expect(res?.headers()["x-robots-tag"]).toBe("noindex, nofollow");
-  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+  // Next.js adds its own robots tag to 404 pages beside ours; every one must say noindex.
+  const robots = await page.locator('meta[name="robots"]').evaluateAll((els) => els.map((e) => e.getAttribute("content") ?? ""));
+  expect(robots.length).toBeGreaterThan(0);
+  expect(robots.every((c) => c.includes("noindex"))).toBe(true);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("This shared submission is not available");
   await expect(page.getByRole("navigation")).toHaveCount(0);
 });
 

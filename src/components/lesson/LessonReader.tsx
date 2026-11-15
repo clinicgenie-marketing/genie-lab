@@ -54,6 +54,8 @@ export function LessonReader({ lesson, lastSection, tickedSteps, canSave, prereq
   const base = `/lesson/${lesson.slug}`;
 
   const [section, setSection] = useState<number>(lastSection ?? first);
+  /** False until the address has been read, so the first render's guess is never saved. */
+  const [arrived, setArrived] = useState(false);
   /** The section scroll positions are recorded against. Switched before any programmatic scroll. */
   const scrollSection = useRef(section);
   const firstVisit = lastSection === null;
@@ -79,6 +81,7 @@ export function LessonReader({ lesson, lastSection, tickedSteps, canSave, prereq
     } else {
       history.replaceState(history.state, "", `${base}#section-${lastSection ?? first}`);
     }
+    setArrived(true);
     // Run once on arrival.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -132,9 +135,10 @@ export function LessonReader({ lesson, lastSection, tickedSteps, canSave, prereq
 
   // Share the position with the lesson bar, and save it as the place to continue from.
   useEffect(() => {
+    if (!arrived) return;
     shareSection(section);
     if (canSave) void saveSectionVisit(lesson.id, section);
-  }, [section, lesson.id, canSave, shareSection]);
+  }, [arrived, section, lesson.id, canSave, shareSection]);
   useEffect(() => () => shareSection(null), [shareSection]);
 
   const goTo = useCallback(

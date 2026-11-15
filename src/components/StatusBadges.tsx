@@ -1,4 +1,4 @@
-import { Check, Circle, CircleCheck, CircleDashed, Clock, Hourglass, Lock, LockOpen, Minus, PenLine, type LucideIcon } from "lucide-react";
+import { Check, FilePen, FileCheck, Circle, CircleCheck, CircleDashed, Clock, Hourglass, Lock, LockOpen, Minus, PenLine, type LucideIcon } from "lucide-react";
 import type { DayAccess, LessonProgressStatus } from "@/lib/schedule";
 
 /**
@@ -60,4 +60,13 @@ export function DayChip({ access }: { access: DayAccess }) {
 /** Availability, a separate dimension: a lesson whose file is missing. Never "Locked". */
 export function ComingSoonBadge() {
   return <Badge className="ob-badge gl-badge ob-badge--soon" icon={Clock} label="Coming soon" />;
+}
+
+/** Submission (decision 6): whether evidence has been sent. Separate from the review decision. */
+export function SubmissionBadge({ state }: { state: "draft" | "submitted" }) {
+  return state === "submitted" ? (
+    <Badge className="ob-badge gl-badge ob-badge--submitted" icon={FileCheck} label="Submitted" />
+  ) : (
+    <Badge className="ob-badge gl-badge ob-badge--draft" icon={FilePen} label="Draft" />
+  );
 }

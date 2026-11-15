@@ -4,6 +4,11 @@ import { defineConfig, devices } from "@playwright/test";
 export const PORT = 3100;
 /** Second server: the real config/cohort.json, which has no start date yet. */
 export const UNSCHEDULED_PORT = 3101;
+/**
+ * Third server for evidence, review and completion flows: same development dates, its own
+ * throwaway data, and the clearly fake knowledge check fixture for Lesson 1.1.
+ */
+export const WORK_PORT = 3102;
 
 export default defineConfig({
   testDir: "tests/e2e",
@@ -24,6 +29,19 @@ export default defineConfig({
       reuseExistingServer: false,
       timeout: 60_000,
       env: { GENIE_LAB_DEV: "1", GENIE_LAB_DEV_COHORT_START: "2026-11-16", GENIE_LAB_DEV_TODAY: "2026-11-18", GENIE_LAB_DATA_DIR: ".data/e2e" },
+    },
+    {
+      command: `rm -rf .data/e2e-work && npx next start -p ${WORK_PORT}`,
+      url: `http://localhost:${WORK_PORT}/home`,
+      reuseExistingServer: false,
+      timeout: 60_000,
+      env: {
+        GENIE_LAB_DEV: "1",
+        GENIE_LAB_DEV_COHORT_START: "2026-11-16",
+        GENIE_LAB_DEV_TODAY: "2026-11-18",
+        GENIE_LAB_DATA_DIR: ".data/e2e-work",
+        GENIE_LAB_KNOWLEDGE_CHECKS_DIR: "tests/fixtures/knowledge-checks",
+      },
     },
     {
       command: `npx next start -p ${UNSCHEDULED_PORT}`,

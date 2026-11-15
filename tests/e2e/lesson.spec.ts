@@ -70,14 +70,15 @@ test.describe("reading a lesson section by section", () => {
 
 test.describe("saved position", () => {
   test("Continue reopens the section where the intern stopped", async ({ page }) => {
+    // Lesson 3.2 is opened by no other test on this server, so nothing else moves its saved section.
     const save = saved(page);
-    await page.goto("/lesson/1-2#section-5");
+    await page.goto("/lesson/3-2#section-5");
     await save;
-    await page.goto("/lesson/1-2");
-    await expect(page).toHaveURL(/\/lesson\/1-2#section-5$/);
-    await expect(page.locator("#lesson-position")).toHaveText("Section 5 of 8");
+    await page.goto("/lesson/3-2");
+    await expect(page).toHaveURL(/\/lesson\/3-2#section-5$/);
+    await expect(page.locator("#lesson-position")).toHaveText("Section 5 of 7");
     // After the first visit the objective card starts collapsed.
-    await page.goto("/lesson/1-2#section-1");
+    await page.goto("/lesson/3-2#section-1");
     await expect(page.locator("details.gl-introcard").first()).not.toHaveAttribute("open", "");
   });
 
@@ -134,8 +135,8 @@ test.describe("Your task", () => {
   });
 
   test("a failed save puts the tick back and says what happened", async ({ page }) => {
-    await page.goto("/lesson/3-1#section-1");
-    await page.route("**/lesson/3-1**", (route) => (route.request().method() === "POST" ? route.abort() : route.continue()));
+    await page.goto("/lesson/1-3#section-1");
+    await page.route("**/lesson/1-3**", (route) => (route.request().method() === "POST" ? route.abort() : route.continue()));
     const step = page.locator(".gl-lesson__task").getByRole("checkbox").first();
     await step.check({ force: true });
     // Scoped to the panel: Next.js adds its own route announcer with role="alert".

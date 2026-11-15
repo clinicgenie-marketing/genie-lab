@@ -7,9 +7,16 @@ import type { LessonSummary } from "./content/model";
 import { effectiveSchedule, reviewPointFor, type ReviewPoint } from "./config";
 import { auth } from "./platform/auth";
 import { progressStore, type LessonProgress } from "./platform/progress";
+import { emptyWork, workStore, type Work } from "./platform/work";
+import { reviewState, type ReviewState } from "./work-rules";
 import { dayAccess, dayOpenDates, formatOpenDate, lessonStatus, type DayAccess, type LessonProgressStatus } from "./schedule";
 
-export type LessonView = LessonSummary & { status: LessonProgressStatus; reviewPoint: ReviewPoint | null };
+export type LessonView = LessonSummary & {
+  status: LessonProgressStatus;
+  reviewPoint: ReviewPoint | null;
+  /** The recorded review state at a review point; null for other lessons. */
+  review: ReviewState | null;
+};
 
 export type DayView = {
   n: number;
@@ -34,13 +41,16 @@ export type ProgrammeView = {
   currentDay: number | null;
 };
 
-export function buildProgrammeView(today: string, openDates: string[] | null, progress: Map<string, LessonProgress>): ProgrammeView {
+export function buildProgrammeView(today: string, openDates: string[] | null, progress: Map<string, LessonProgress>, work: Work = emptyWork()): ProgrammeView {
   const dayViews = days.map((d, i): DayView => {
     const openDate = openDates?.[i] ?? null;
     const progressOf = (id: string) => progress.get(id)?.status;
     const allComplete = d.lessons.every((l) => l.available && progressOf(l.id) === "complete");
     const access = dayAccess(openDate, today, allComplete);
-    const lessons = d.lessons.map((l) => ({ ...l, status: lessonStatus(access, l.available ? progressOf(l.id) : undefined), reviewPoint: reviewPointFor(l.id) ?? null }));
+    const lessons = d.lessons.map((l) => {
+      const reviewPoint = reviewPointFor(l.id) ?? null;
+      return { ...l, status: lessonStatus(access, l.available ? progressOf(l.id) : undefined), reviewPoint, review: reviewPoint ? reviewState(work, l.id) : null };
+    });
     return {
       n: d.n,
       title: d.title,
@@ -67,7 +77,8 @@ export async function getProgrammeView(): Promise<ProgrammeView> {
   const { cohort, today } = effectiveSchedule();
   const intern = await auth.getCurrentIntern();
   const progress = intern ? await progressStore.list(intern.id) : new Map<string, LessonProgress>();
-  return buildProgrammeView(today, dayOpenDates(cohort, days.length), progress);
+  const work = intern ? await workStore.get(intern.id) : emptyWork();
+  return buildProgrammeView(today, dayOpenDates(cohort, days.length), progress, work);
 }
 
 /** The first available lesson in the day that is not complete, for the day's primary action. */
