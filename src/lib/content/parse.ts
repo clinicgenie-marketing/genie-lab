@@ -25,6 +25,7 @@ import type {
   SubmissionPart,
   TaskPart,
 } from "./model.ts";
+import { inlineText } from "./text.ts";
 
 export class ContentError extends Error {
   constructor(lessonId: string, message: string, line?: number) {
@@ -153,15 +154,7 @@ function toBlocks(nodes: RootContent[], ctx: Ctx): Block[] {
 
 // ---------- Text helpers ----------
 
-export function inlineText(inlines: Inline[]): string {
-  return inlines
-    .map((i) => {
-      if (i.type === "text" || i.type === "inlineCode") return i.value;
-      if (i.type === "break") return " ";
-      return inlineText(i.children);
-    })
-    .join("");
-}
+export { inlineText };
 
 function phrasingText(nodes: PhrasingContent[]): string {
   return nodes.map((n) => ("value" in n ? n.value : "children" in n ? phrasingText(n.children as PhrasingContent[]) : "")).join("");

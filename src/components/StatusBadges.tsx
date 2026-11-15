@@ -3,10 +3,10 @@ import type { DayAccess, LessonProgressStatus } from "@/lib/schedule";
 
 /**
  * Three kinds of status, kept apart (docs/DECISIONS.md, decision 3). Each pairs an icon with
- * a word; colour only supports the word.
- *   Lesson progress  pill (`radius-pill`), round icon
- *   Review decision  tag (`radius-input`)
- *   Day access       outlined day chip
+ * a word; colour only supports the word. They differ by fill, outline and icon:
+ *   Lesson progress  filled pill, round icons
+ *   Review decision  outlined tag
+ *   Day access       icon and word, no container
  */
 
 const iconProps = { size: 20, "aria-hidden": true, focusable: false } as const;

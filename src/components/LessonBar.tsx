@@ -3,15 +3,14 @@ import { ArrowLeft } from "lucide-react";
 import { HelpIcon, HomeIcon } from "./icons";
 import type { LessonRef } from "@/lib/content/curriculum";
 import { IconLink } from "./IconLink";
-
-export type SectionPosition = { current: number; total: number };
+import { OutlineButton, SectionProgress } from "./lesson/LessonBarControls";
 
 /**
  * The focused bar on lesson screens, replacing the top bar. Left: back to the day and a
- * breadcrumb. Centre: section position with a progress bar, shown only once real section
- * data exists (Phase 3). Right: Outline (Phase 3), Help and Home.
+ * breadcrumb. Centre: "Section 3 of 9" with a progress bar while a section is on screen.
+ * Right: Outline (below 1280px), Help and Home. Needs LessonNavProvider.
  */
-export function LessonBar({ lesson, section }: { lesson: LessonRef; section?: SectionPosition }) {
+export function LessonBar({ lesson }: { lesson: LessonRef }) {
   const dayHref = `/day/${lesson.day}`;
   return (
     <header className="ob-topbar gl-lessonbar" data-surface="dark">
@@ -34,15 +33,9 @@ export function LessonBar({ lesson, section }: { lesson: LessonRef; section?: Se
           </li>
         </ol>
       </nav>
-      {section ? (
-        <div className="gl-lessonbar__progress">
-          <span className="t-label-meta" id="lesson-position">
-            Section {section.current} of {section.total}
-          </span>
-          <progress className="gl-progress" aria-labelledby="lesson-position" value={section.current} max={section.total} />
-        </div>
-      ) : null}
+      <SectionProgress />
       <div className="ob-utils gl-lessonbar__end">
+        <OutlineButton />
         <IconLink href="/help" label="Help" icon={<HelpIcon />} />
         <IconLink href="/home" label="Home" icon={<HomeIcon />} />
       </div>
