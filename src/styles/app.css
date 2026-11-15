@@ -343,14 +343,14 @@ body { background: var(--outer); }
 .gl-outline__list a[aria-current] .gl-outline__status { color: var(--on-shell); }
 
 /* Drawer on the native dialog. */
-.gl-drawer { margin: 0 0 0 auto; padding: 0; border: 0; width: min(var(--width-drawer), 100%); max-width: 100%; height: 100%; max-height: 100%; background: transparent; }
+.gl-drawer { margin: 0 0 0 auto; padding: 0; border: 0; width: min(var(--width-drawer), 100%); max-width: 100%; height: 100%; max-height: 100%; background: var(--surface); border-radius: var(--radius-card) 0 0 var(--radius-card); box-shadow: var(--shadow-overlay); }
+.gl-drawer .ob-drawer { box-shadow: none; border-radius: 0; background: transparent; }
 .gl-drawer::backdrop { background: var(--scrim); }
 .gl-drawer__panel { min-height: 100%; overflow-y: auto; }
 .gl-drawer[open] .gl-drawer__panel { animation: gl-drawer-in var(--duration-overlay) ease-out; }
 @keyframes gl-drawer-in { from { transform: translateX(var(--space-6)); opacity: 0; } to { transform: none; opacity: 1; } }
 @media (max-width: 767.98px) {
-  .gl-drawer { width: 100%; }
-  .gl-drawer__panel { border-radius: 0; }
+  .gl-drawer { width: 100%; border-radius: 0; }
 }
 
 /* Your task */
@@ -369,3 +369,91 @@ body { background: var(--outer); }
 .gl-save--error:empty { display: none; }
 .gl-lesson__task .gl-task, .gl-lesson__taskpanel .gl-task { padding: var(--space-5); border-radius: var(--radius-card); background: var(--surface); box-shadow: inset 0 0 0 1px var(--border-subtle); }
 .gl-taskpage { max-width: var(--width-prose); display: flex; flex-direction: column; gap: var(--space-6); }
+
+/* ---------- Phase 4: evidence, My work, review, sharing, checks, completion ---------- */
+
+.gl-prewrap { white-space: pre-wrap; overflow-wrap: anywhere; }
+.gl-submitpage, .gl-checkpage { max-width: var(--width-prose); display: flex; flex-direction: column; gap: var(--space-6); }
+
+/* Evidence form */
+.gl-evidence { display: flex; flex-direction: column; gap: var(--space-6); }
+.gl-evidence__items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-4); }
+.gl-evidence__item { border: 0; margin: 0; min-width: 0; gap: var(--space-4); }
+.gl-evidence__item:focus { outline: none; }
+.gl-evidence__item:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.gl-evidence__legend { display: flex; flex-direction: column; gap: var(--space-1); padding: 0; margin-bottom: var(--space-3); float: left; width: 100%; }
+.gl-evidence__legend + * { clear: both; }
+.gl-evidence__n { color: var(--text-secondary); }
+.gl-evidence__label { font-size: 1.0625rem; line-height: 1.625rem; font-weight: 600; }
+.gl-kinds { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.gl-kind { cursor: pointer; }
+.gl-kind svg { flex: none; }
+.gl-field { max-width: 100%; }
+.gl-commit { max-width: 480px; font-family: var(--font-code); }
+.gl-fileinput { min-height: var(--height-control-large); font-family: var(--font-body); font-size: 1rem; max-width: 100%; }
+.gl-filechip { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); padding: var(--space-3) var(--space-4); border-radius: var(--radius-input); background: var(--surface-muted); overflow-wrap: anywhere; }
+.gl-upload-status:empty { display: none; }
+.gl-upload-failed { display: flex; flex-direction: column; gap: var(--space-2); }
+.gl-evidence__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.gl-error-summary { outline: none; }
+.gl-error-summary:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.gl-reviewpoint, .gl-review-record { gap: var(--space-4); }
+.gl-review-record { max-width: var(--width-prose); }
+/* The native file button, styled as the design system's secondary button. */
+.gl-fileinput::file-selector-button {
+  min-height: var(--height-control); margin-right: var(--space-3); padding: 0 var(--space-5); cursor: pointer;
+  border: 1px solid var(--border-control); border-radius: var(--radius-button); background: var(--surface); color: var(--ink);
+  font-family: var(--font-body); font-size: 0.875rem; line-height: 1.25rem; font-weight: 600;
+}
+.gl-fileinput::file-selector-button:hover { background: var(--surface-muted); }
+
+/* Confirmation dialog */
+/* The dialog element is the panel itself, so no transparent box shows around it. */
+.gl-dialog { padding: 0; border: 0; width: min(560px, calc(100% - var(--space-8))); max-height: calc(100% - var(--space-8)); border-radius: var(--radius-card); background: var(--surface); color: var(--ink); box-shadow: var(--shadow-overlay); }
+.gl-dialog::backdrop { background: var(--scrim); }
+.gl-dialog__panel { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-6); overflow-wrap: anywhere; }
+.gl-dialog[open] { animation: gl-dialog-in var(--duration-overlay) ease-out; }
+@keyframes gl-dialog-in { from { transform: translateY(var(--space-2)); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* My work */
+.gl-sublist { gap: var(--space-3); }
+.gl-sub__main { min-width: 0; display: flex; flex-direction: column; gap: var(--space-1); }
+.gl-sub__title { font-weight: 600; overflow-wrap: anywhere; }
+.gl-empty { max-width: var(--width-prose); }
+@media (max-width: 767.98px) {
+  .gl-sub { grid-template-columns: 1fr; }
+  .ob-sub__actions { justify-content: flex-start; }
+}
+
+/* Submission detail */
+.gl-evidence-view { display: flex; flex-direction: column; gap: var(--space-3); max-width: var(--width-prose); }
+.gl-evidence-view__items { margin: 0; padding-left: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
+.gl-evidence-view__label { font-weight: 600; }
+.gl-evidence-view__text { white-space: pre-wrap; overflow-wrap: anywhere; padding: var(--space-3) var(--space-4); border-radius: var(--radius-input); background: var(--surface); box-shadow: inset 0 0 0 1px var(--border-subtle); }
+.gl-filelink { display: inline-flex; align-items: center; gap: var(--space-2); overflow-wrap: anywhere; }
+.gl-share { display: flex; flex-direction: column; gap: var(--space-3); max-width: var(--width-prose); }
+.gl-share__field input { font-family: var(--font-code); font-size: 0.875rem; }
+.gl-decisions { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-4); }
+.gl-decision { display: flex; flex-direction: column; gap: var(--space-2); padding-bottom: var(--space-4); border-bottom: 1px solid var(--border-subtle); }
+.gl-reviewform { display: flex; flex-direction: column; gap: var(--space-5); }
+.gl-version > summary { cursor: pointer; list-style-position: inside; }
+.gl-version[open] > summary { margin-bottom: var(--space-3); }
+@media (max-width: 767.98px) {
+  .ob-dl { grid-template-columns: 1fr; gap: var(--space-1); }
+  .ob-dl dd { margin-bottom: var(--space-2); }
+}
+
+/* Knowledge check */
+.gl-question { gap: var(--space-4); }
+.gl-question legend:focus { outline: none; }
+.gl-question .ob-option { min-height: var(--height-control-large); padding-top: var(--space-2); padding-bottom: var(--space-2); }
+.gl-question .ob-fieldset[disabled] .ob-option { cursor: default; }
+.gl-check { display: flex; flex-direction: column; gap: var(--space-3); }
+
+/* Completion */
+.gl-selfcheck, .gl-complete { gap: var(--space-4); }
+.gl-criterion-option { align-items: flex-start; padding-top: var(--space-3); padding-bottom: var(--space-3); }
+.gl-criterion-option input { margin-top: 2px; flex: none; }
+.gl-conditions { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.gl-condition { display: flex; gap: var(--space-2); align-items: flex-start; }
+.gl-condition svg { flex: none; margin-top: 2px; }

@@ -5,12 +5,13 @@
  *
  * Run with: node scripts/build-content.ts
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CurriculumSchema } from "../src/lib/content/curriculum-schema.ts";
 import { parseLesson } from "../src/lib/content/parse.ts";
 import type { ContentModel, Lesson } from "../src/lib/content/model.ts";
+import { parseKnowledgeCheck } from "../src/lib/knowledge-checks.ts";
 
 export function lessonSlug(id: string): string {
   return id.replace(".", "-");
@@ -45,7 +46,27 @@ export function buildContentModel(contentDir: string): ContentModel {
     if (d.n !== i + 1) throw new Error(`curriculum.json has Day ${d.n} where Day ${i + 1} was expected`);
   });
 
+  validateKnowledgeChecks(join(contentDir, "knowledge-checks"), new Set(seen));
   return { platform: { name: curriculum.platform_name, description: curriculum.platform_description }, days, lessons };
+}
+
+/** Fails the build on any malformed multiple-choice check, so a bad file never reaches an intern. */
+export function validateKnowledgeChecks(dir: string, lessonIds: Set<string>): number {
+  if (!existsSync(dir)) return 0;
+  let count = 0;
+  for (const name of readdirSync(dir)) {
+    if (!name.endsWith(".json")) continue;
+    const m = /^lesson-(\d+\.\d+)\.json$/.exec(name);
+    if (!m) throw new Error(`knowledge-checks/${name}: expected a name like lesson-4.2.json`);
+    if (!lessonIds.has(m[1]!)) throw new Error(`knowledge-checks/${name}: no Lesson ${m[1]} in curriculum.json`);
+    try {
+      parseKnowledgeCheck(JSON.parse(readFileSync(join(dir, name), "utf8")), m[1]!);
+    } catch (e) {
+      throw new Error(`knowledge-checks/${name}: ${(e as Error).message}`);
+    }
+    count++;
+  }
+  return count;
 }
 
 function main() {

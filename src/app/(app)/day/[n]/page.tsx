@@ -143,7 +143,7 @@ export default async function DayPage({ params }: Props) {
                   <strong>
                     Lesson {l.id}: {l.title}
                   </strong>
-                  <ReviewTag decision="not_submitted" />
+                  <ReviewTag decision={l.review ?? "not_submitted"} />
                 </p>
                 <p className="ob-p">
                   <span className="ob-secondary">Your supervisor:</span> {l.reviewPoint!.supervisorDecides}

@@ -4,7 +4,12 @@ import { z } from "zod";
 import { auth } from "@/lib/platform/auth";
 import { progressStore, type LessonProgress } from "@/lib/platform/progress";
 import { getLessonAccess } from "@/lib/lesson-access";
-import { emptyProgress, recordVisit, setCriterion, setStep } from "@/lib/progress-rules";
+import { chooseCriterion, emptyProgress, markComplete, recordVisit, setCriterion, setStep } from "@/lib/progress-rules";
+import { revalidatePath } from "next/cache";
+import { lessonIdToSlug } from "@/lib/content/curriculum";
+import { checkState } from "@/lib/lesson-state";
+import { workStore } from "@/lib/platform/work";
+import { completion, latestSubmission } from "@/lib/work-rules";
 
 export type ProgressResult = { ok: true; progress: LessonProgress } | { ok: false; error: "not_signed_in" | "not_available" | "invalid" | "save_failed" };
 
@@ -40,4 +45,39 @@ export async function saveStep(lessonId: string, stepId: string, checked: boolea
 
 export async function saveCriterion(lessonId: string, criterionId: string, checked: boolean): Promise<ProgressResult> {
   return change(lessonId, (l) => typeof checked === "boolean" && l.criteria.items.some((c) => c.id === criterionId), (p) => setCriterion(p, criterionId, checked));
+}
+
+/** Lesson 1.2's "either" criteria: choosing one alternative replaces any other. */
+export async function chooseCriterionOption(lessonId: string, criterionId: string): Promise<ProgressResult> {
+  return change(lessonId, (l) => l.criteria.mode === "one" && l.criteria.items.some((c) => c.id === criterionId), (p) => chooseCriterion(p, criterionId));
+}
+
+export type CompleteResult = { ok: true } | { ok: false; error: string };
+
+/**
+ * Marks the lesson complete once all four conditions hold: every step ticked, evidence
+ * submitted, every completion criterion ticked, and the knowledge check passed (or not yet
+ * available). Checked again here, whatever the page showed. Supervisor review plays no part.
+ */
+export async function markLessonComplete(lessonId: string): Promise<CompleteResult> {
+  if (!LessonId.safeParse(lessonId).success) return { ok: false, error: "This lesson does not exist." };
+  const intern = await auth.getCurrentIntern();
+  if (!intern) return { ok: false, error: "Your progress can't be saved because you're not signed in." };
+  const access = await getLessonAccess(lessonId);
+  if (access.kind !== "open") return { ok: false, error: "This lesson isn't open yet." };
+  try {
+    const work = await workStore.get(intern.id);
+    const current = await progressStore.get(intern.id, lessonId);
+    const check = await checkState(lessonId, current);
+    const state = completion(access.lesson, current, Boolean(latestSubmission(work, lessonId)), check);
+    if (!state.ready) return { ok: false, error: "Some conditions are not met yet. Check the list above." };
+    await progressStore.update(intern.id, lessonId, (p) => markComplete(p ?? emptyProgress(lessonId), new Date().toISOString(), check === "passed" ? "passed" : "unavailable"));
+    const slug = lessonIdToSlug(lessonId);
+    revalidatePath(`/lesson/${slug}`, "layout");
+    revalidatePath("/syllabus");
+    revalidatePath(`/day/${access.lesson.day}`);
+    return { ok: true };
+  } catch {
+    return { ok: false, error: "We couldn't save your changes. Check your connection, then try again." };
+  }
 }

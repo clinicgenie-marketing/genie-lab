@@ -45,7 +45,7 @@ function DayCard({ day, current, total }: { day: DayView; current: boolean; tota
             {reviewPoints.map((l) => (
               <p key={l.id} className="ob-p gl-inline-status">
                 <span>Review point: Lesson {l.id}</span>
-                <ReviewTag decision="not_submitted" />
+                <ReviewTag decision={l.review ?? "not_submitted"} />
               </p>
             ))}
           </div>

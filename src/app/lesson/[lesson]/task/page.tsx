@@ -1,6 +1,11 @@
 import { lessonMetadata, type LessonRouteProps } from "../lesson-page";
 import { loadLesson } from "../load";
 import { LessonUnavailable } from "../unavailable";
+import { lessons } from "@/lib/content/curriculum";
+import { checkState } from "@/lib/lesson-state";
+import { auth } from "@/lib/platform/auth";
+import { emptyWork, workStore } from "@/lib/platform/work";
+import { latestSubmission } from "@/lib/work-rules";
 import { TaskPageClient } from "./TaskPageClient";
 
 export const generateMetadata = lessonMetadata("Your task");
@@ -10,6 +15,10 @@ export default async function TaskPage({ params }: LessonRouteProps) {
   if (!("canSave" in data)) return <LessonUnavailable access={data.access} />;
   const { access, canSave, progress } = data;
   const lesson = access.lesson;
+  const intern = await auth.getCurrentIntern();
+  const work = intern ? await workStore.get(intern.id) : emptyWork();
+  const i = lessons.findIndex((l) => l.id === lesson.id);
+  const following = lessons[i + 1];
   return (
     <>
       <p className="ob-p t-label-meta gl-eyebrow">
@@ -19,9 +28,15 @@ export default async function TaskPage({ params }: LessonRouteProps) {
         lessonId={lesson.id}
         slug={lesson.slug}
         task={lesson.task}
+        criteria={lesson.criteria}
         tickedSteps={progress?.tickedSteps ?? []}
+        tickedCriteria={progress?.tickedCriteria ?? []}
         canSave={canSave}
         lastSection={progress?.lastSection ?? lesson.sections[lesson.sections.length - 1]!.number}
+        submitted={Boolean(latestSubmission(work, lesson.id))}
+        check={await checkState(lesson.id, progress)}
+        complete={progress?.status === "complete"}
+        next={following ? { id: following.id, slug: following.slug, title: following.title } : null}
       />
     </>
   );
