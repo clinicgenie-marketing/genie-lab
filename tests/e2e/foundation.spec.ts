@@ -5,7 +5,7 @@ const MAIN_ITEMS = ["Home", "Syllabus", "My work", "Toolkit"];
 const WIDTHS = [320, 360, 390, 720, 768, 1024, 1280, 1440];
 
 const APP_ROUTES = [
-  "/welcome", "/home", "/syllabus", "/day/1", "/day/7", "/day/10", "/work", "/work/2-4",
+  "/welcome", "/home", "/syllabus", "/day/1", "/day/3", "/day/6", "/day/7", "/day/10", "/work", "/work/2-4",
   "/toolkit/prompts", "/toolkit/commands", "/toolkit/templates", "/toolkit/glossary",
   "/toolkit/project-kit", "/toolkit/statuses", "/help", "/settings",
 ];
@@ -161,7 +161,7 @@ test.describe("lesson bar", () => {
 });
 
 test.describe("no sideways scrolling", () => {
-  for (const route of ["/home", "/day/7", "/toolkit/project-kit", "/lesson/4-2", "/lesson/10-4/submit", "/share/example-token"]) {
+  for (const route of ["/home", "/syllabus", "/day/3", "/day/7", "/toolkit/project-kit", "/lesson/4-2", "/lesson/10-4/submit", "/share/example-token"]) {
     for (const width of WIDTHS) {
       test(`${route} at ${width}px`, async ({ page }) => {
         await page.setViewportSize({ width, height: 800 });
@@ -173,7 +173,7 @@ test.describe("no sideways scrolling", () => {
 });
 
 test.describe("narrow screens pass axe", () => {
-  for (const route of ["/home", "/lesson/4-2", "/toolkit/prompts"]) {
+  for (const route of ["/home", "/syllabus", "/day/3", "/day/6", "/lesson/4-2", "/toolkit/prompts"]) {
     test(`${route} at 320px`, async ({ page }) => {
       await page.setViewportSize({ width: 320, height: 800 });
       await page.goto(route);

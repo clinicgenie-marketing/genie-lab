@@ -1,4 +1,3 @@
-import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { days, getDayFromParam, getLessonBySlug, lessonIdToSlug, lessons, platform, slugToLessonId } from "@/lib/content/curriculum";
 
@@ -15,8 +14,8 @@ describe("curriculum", () => {
   it("shows Unit 7's platform title, not its locked title", () => {
     expect(getDayFromParam("7")?.title).toBe("Forms and Interactive Features");
   });
-  it("points every lesson at a file inside content/", () => {
-    for (const l of lessons) expect(existsSync(`content/${l.file}`), l.file).toBe(true);
+  it("has every lesson available, since all 40 files exist", () => {
+    for (const l of lessons) expect(l.available, l.id).toBe(true);
   });
   it("converts IDs and URL slugs both ways", () => {
     expect(lessonIdToSlug("10.4")).toBe("10-4");
