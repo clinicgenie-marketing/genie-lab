@@ -1,0 +1,5 @@
+{
+  "status": "not supplied",
+  "note": "One sentence per day describing the day's goal. Leave a day null until its sentence is written; the platform shows \"Not yet supplied\".",
+  "goals": { "1": null, "2": null, "3": null, "4": null, "5": null, "6": null, "7": null, "8": null, "9": null, "10": null }
+}

@@ -10,6 +10,9 @@ next-env.d.ts
 # Generated from design-system/ by scripts/build-design-system.ts
 src/styles/generated/
 
+# Generated from content/ by scripts/build-content.ts
+src/generated/
+
 # Local development data (progress, submissions, uploads)
 .data/
 

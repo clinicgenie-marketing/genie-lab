@@ -158,3 +158,71 @@ body { background: var(--outer); }
 
 /* Placeholder for routes built in later phases. */
 .gl-notbuilt { max-width: var(--width-prose); }
+
+/* ---------- Phase 2: content, status badges, Syllabus and Day ---------- */
+
+.gl-link { color: var(--ink); text-underline-offset: 3px; }
+.gl-link__icon { display: inline; vertical-align: -0.2em; margin-left: var(--space-1); }
+.gl-inline-code { font-family: var(--font-code); font-size: 0.9em; padding: 0 var(--space-1); border-radius: var(--radius-input); background: var(--surface-muted); overflow-wrap: anywhere; }
+
+/* Status badges (decision 3). Icons sit before the word. */
+.gl-badge { gap: var(--space-1); }
+.gl-badge svg { flex: none; }
+/* Review decision: a tag with `radius-input` corners and a control edge. */
+.gl-tag { border-radius: var(--radius-input); box-shadow: inset 0 0 0 1px var(--border-control); }
+/* Day access: an outlined chip on `surface`. */
+.gl-chip { background: var(--surface); box-shadow: inset 0 0 0 1px var(--border-control); }
+/* A badge inside a pastel row keeps a `surface` fill so it stays distinct (LessonRow guideline). */
+.ob-row--current .ob-badge:not(.ob-badge--progress):not(.ob-badge--complete) { background: var(--surface); }
+
+.gl-inline-status { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+.gl-alert { max-width: var(--width-prose); }
+.gl-alert .ob-p + .ob-p { margin-top: var(--space-1); }
+.gl-stat { max-width: 360px; gap: var(--space-1); }
+
+/* Disclosure built on native details/summary. */
+.gl-disclosure > summary {
+  display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--height-control);
+  cursor: pointer; font-size: 0.875rem; line-height: 1.25rem; font-weight: 600; color: var(--ink);
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.gl-disclosure__body { margin-top: var(--space-2); }
+.gl-bullets { margin: var(--space-2) 0 0; padding-left: var(--space-6); display: flex; flex-direction: column; gap: var(--space-2); }
+
+/* Syllabus */
+.gl-daylist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-4); }
+.gl-daycard__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: var(--space-3); }
+.gl-daycard__titles { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
+.gl-daycard__eyebrow { color: var(--text-secondary); }
+.gl-daycard__meta, .gl-daycard__opens { color: var(--text-secondary); }
+.gl-daycard__opens { font-weight: 600; }
+.gl-daycard__review { display: flex; flex-direction: column; gap: var(--space-2); }
+
+/* Lesson rows: stack below 768px (LessonRow guideline). */
+.gl-row { grid-template-columns: 56px minmax(0, 1fr) auto auto; }
+.gl-row__main { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
+.gl-row__meta { color: var(--text-secondary); }
+.gl-row__action { justify-self: end; }
+.gl-row__action a { display: inline-flex; align-items: center; min-height: var(--height-control); }
+@media (max-width: 767.98px) {
+  .gl-row { grid-template-columns: 40px minmax(0, 1fr); gap: var(--space-2) var(--space-3); }
+  .gl-row .ob-row__badges, .gl-row .gl-row__action { grid-column: 2; justify-self: start; justify-content: flex-start; }
+}
+
+/* Day page */
+.gl-dayhead { display: flex; flex-direction: column; gap: var(--space-4); }
+.gl-section { display: flex; flex-direction: column; gap: var(--space-4); }
+.gl-section__head { display: flex; flex-direction: column; gap: var(--space-1); }
+.gl-needs { margin: 0; display: flex; flex-direction: column; gap: var(--space-4); max-width: var(--width-prose); }
+.gl-needs__item { display: flex; flex-direction: column; gap: var(--space-1); }
+.gl-needs dt { color: var(--text-secondary); }
+.gl-needs dd { margin: 0; }
+.gl-cardlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-4); }
+.gl-lessoncard__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: var(--space-3); }
+.gl-lessoncard__head h3 { min-width: 0; flex: 1 1 20rem; overflow-wrap: anywhere; }
+.gl-lessoncard__id { color: var(--text-secondary); }
+.gl-lessoncard__meta { color: var(--text-secondary); }
+.gl-review { gap: var(--space-2); }
+@media (max-width: 767.98px) {
+  .ob-card { padding: var(--space-5); }
+}

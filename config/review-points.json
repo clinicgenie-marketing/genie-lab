@@ -1,0 +1,18 @@
+{
+  "status": "proposed",
+  "source": "docs/IA_AND_USER_FLOWS.md, section \"Review points (proposed)\"",
+  "note": "Lessons that end with work sent for a supervisor decision. Day 1 has no review point; its evidence is still submitted.",
+  "reviewPoints": [
+    { "lesson": "2.4", "supervisorDecides": "Accepts the website brief and structure" },
+    { "lesson": "3.4", "supervisorDecides": "Accepts the instruction baseline" },
+    { "lesson": "4.4", "supervisorDecides": "Accepts the reviewed component" },
+    { "lesson": "5.4", "supervisorDecides": "Accepts the homepage" },
+    { "lesson": "6.4", "supervisorDecides": "Accepts the internal pages" },
+    { "lesson": "7.4", "supervisorDecides": "Accepts the interactive features" },
+    { "lesson": "8.2", "supervisorDecides": "Accepts the QA corrections" },
+    { "lesson": "9.4", "supervisorDecides": "Authorises and checks the staging deployment" },
+    { "lesson": "10.1", "supervisorDecides": "Approves the change plan" },
+    { "lesson": "10.3", "supervisorDecides": "Approves the evidence" },
+    { "lesson": "10.4", "supervisorDecides": "Approves the handover" }
+  ]
+}
