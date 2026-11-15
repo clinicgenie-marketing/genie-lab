@@ -1,0 +1,392 @@
+{
+  "platform_name": "Genie Lab",
+  "platform_description": "Clinic Genie Vibe Coding Intern Platform",
+  "programme": "Genie Lab: design and vibe coding with Claude Code",
+  "practice_client": "Saffron Wellness Clinic (fictional)",
+  "status": "Approved and locked (Lessons 1.3, 1.4 and 9.4 revised, awaiting approval)",
+  "locked_on": "2026-11-13",
+  "language": "en-GB",
+  "stack": "TypeScript and TSX",
+  "lesson_count_planned": 40,
+  "lesson_count_included": 40,
+  "missing_lessons": [],
+  "units": [
+    {
+      "unit": 1,
+      "day": 1,
+      "title": "Introduction and Tool Setup",
+      "lessons": [
+        {
+          "id": "1.1",
+          "order": 1,
+          "title": "How Websites Work and the Vibe Coding Workflow",
+          "file": "lessons/lesson-1.1.md",
+          "estimated_minutes": 60
+        },
+        {
+          "id": "1.2",
+          "order": 2,
+          "title": "Setting Up Claude Code CLI and the Terminal",
+          "file": "lessons/lesson-1.2.md",
+          "estimated_minutes": 105
+        },
+        {
+          "id": "1.3",
+          "order": 3,
+          "title": "Understanding Project Files, TypeScript and TSX",
+          "file": "lessons/lesson-1.3.md",
+          "estimated_minutes": 90,
+          "approval": "Awaiting approval (revised 15 November 2026)"
+        },
+        {
+          "id": "1.4",
+          "order": 4,
+          "title": "Run a Starter Website and Save a Git Checkpoint",
+          "file": "lessons/lesson-1.4.md",
+          "estimated_minutes": 105,
+          "approval": "Awaiting approval (revised 15 November 2026)"
+        }
+      ],
+      "estimated_minutes": 360
+    },
+    {
+      "unit": 2,
+      "day": 2,
+      "title": "Brief, Research and Website Structure",
+      "lessons": [
+        {
+          "id": "2.1",
+          "order": 1,
+          "title": "Understanding the Business, Audience and Industry",
+          "file": "lessons/lesson-2.1.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "2.2",
+          "order": 2,
+          "title": "Researching Relevant References and Sources Efficiently",
+          "file": "lessons/lesson-2.2.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "2.3",
+          "order": 3,
+          "title": "Planning the Sitemap, User Journeys and Page Sections",
+          "file": "lessons/lesson-2.3.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "2.4",
+          "order": 4,
+          "title": "Submit the Website Brief and Structure for Review",
+          "file": "lessons/lesson-2.4.md",
+          "estimated_minutes": 90
+        }
+      ],
+      "estimated_minutes": 360
+    },
+    {
+      "unit": 3,
+      "day": 3,
+      "title": "Design and Markdown Instructions",
+      "lessons": [
+        {
+          "id": "3.1",
+          "order": 1,
+          "title": "Following the Approved Design, Style Guide and Content",
+          "file": "lessons/lesson-3.1.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "3.2",
+          "order": 2,
+          "title": "Understanding the Project Markdown Files and Instruction Hierarchy",
+          "file": "lessons/lesson-3.2.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "3.3",
+          "order": 3,
+          "title": "Preparing the PRD, Architecture, Rules and Task Plan",
+          "file": "lessons/lesson-3.3.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "3.4",
+          "order": 4,
+          "title": "Review the Instructions Before Building",
+          "file": "lessons/lesson-3.4.md",
+          "estimated_minutes": 90
+        }
+      ],
+      "estimated_minutes": 360
+    },
+    {
+      "unit": 4,
+      "day": 4,
+      "title": "Directing Claude Code and Building Foundations",
+      "lessons": [
+        {
+          "id": "4.1",
+          "order": 1,
+          "title": "Inspecting a Project and Writing Scoped Prompts",
+          "file": "lessons/lesson-4.1.md",
+          "estimated_minutes": 75
+        },
+        {
+          "id": "4.2",
+          "order": 2,
+          "title": "Planning Small Tasks with Clear Acceptance Criteria",
+          "file": "lessons/lesson-4.2.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "4.3",
+          "order": 3,
+          "title": "Building Shared Styles, Navigation and Reusable Components",
+          "file": "lessons/lesson-4.3.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "4.4",
+          "order": 4,
+          "title": "Review the Build Against the Approved Design",
+          "file": "lessons/lesson-4.4.md",
+          "estimated_minutes": 105
+        }
+      ],
+      "estimated_minutes": 360
+    },
+    {
+      "unit": 5,
+      "day": 5,
+      "title": "Homepage and Responsive Design",
+      "lessons": [
+        {
+          "id": "5.1",
+          "order": 1,
+          "title": "Building the Homepage Section by Section",
+          "file": "lessons/lesson-5.1.md",
+          "estimated_minutes": 75
+        },
+        {
+          "id": "5.2",
+          "order": 2,
+          "title": "Adding and Checking Copy, Images and Calls to Action",
+          "file": "lessons/lesson-5.2.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "5.3",
+          "order": 3,
+          "title": "Refining the Homepage Across Screen Sizes",
+          "file": "lessons/lesson-5.3.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "5.4",
+          "order": 4,
+          "title": "Reviewing and Submitting the Homepage",
+          "file": "lessons/lesson-5.4.md",
+          "estimated_minutes": 105
+        }
+      ],
+      "estimated_minutes": 360
+    },
+    {
+      "unit": 6,
+      "day": 6,
+      "title": "Supporting Pages and Functionality",
+      "lessons": [
+        {
+          "id": "6.1",
+          "order": 1,
+          "title": "Planning and Building Internal Pages",
+          "file": "lessons/lesson-6.1.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "6.2",
+          "order": 2,
+          "title": "Building Related Pages Without Duplicating Work",
+          "file": "lessons/lesson-6.2.md",
+          "estimated_minutes": 75
+        },
+        {
+          "id": "6.3",
+          "order": 3,
+          "title": "Connecting Pages and Checking Visitor Journeys",
+          "file": "lessons/lesson-6.3.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "6.4",
+          "order": 4,
+          "title": "Reviewing and Submitting the Internal Pages",
+          "file": "lessons/lesson-6.4.md",
+          "estimated_minutes": 105
+        }
+      ],
+      "estimated_minutes": 360
+    },
+    {
+      "unit": 7,
+      "day": 7,
+      "title": "Forms and Interactive Features",
+      "lessons": [
+        {
+          "id": "7.1",
+          "order": 1,
+          "title": "Defining Forms and Interactive Features",
+          "file": "lessons/lesson-7.1.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "7.2",
+          "order": 2,
+          "title": "Implementing and Testing Interactive Behaviour",
+          "file": "lessons/lesson-7.2.md",
+          "estimated_minutes": 75
+        },
+        {
+          "id": "7.3",
+          "order": 3,
+          "title": "Debugging Interactive Features and Handling Failures",
+          "file": "lessons/lesson-7.3.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "7.4",
+          "order": 4,
+          "title": "Reviewing and Submitting Interactive Features",
+          "file": "lessons/lesson-7.4.md",
+          "estimated_minutes": 105
+        }
+      ],
+      "locked_title": "Content, SEO and Accessibility",
+      "estimated_minutes": 360
+    },
+    {
+      "unit": 8,
+      "day": 8,
+      "title": "Testing and Debugging",
+      "lessons": [
+        {
+          "id": "8.1",
+          "order": 1,
+          "title": "Planning and Running a Website QA Review",
+          "file": "lessons/lesson-8.1.md",
+          "estimated_minutes": 75
+        },
+        {
+          "id": "8.2",
+          "order": 2,
+          "title": "Correcting QA Findings and Running Regression Checks",
+          "file": "lessons/lesson-8.2.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "8.3",
+          "order": 3,
+          "title": "Running a Focused Accessibility Review",
+          "file": "lessons/lesson-8.3.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "8.4",
+          "order": 4,
+          "title": "Automating Key Checks with Playwright",
+          "file": "lessons/lesson-8.4.md",
+          "estimated_minutes": 105
+        }
+      ],
+      "estimated_minutes": 360
+    },
+    {
+      "unit": 9,
+      "day": 9,
+      "title": "Security, Performance and Staging",
+      "lessons": [
+        {
+          "id": "9.1",
+          "order": 1,
+          "title": "Handling Credentials, Personal Data and Dependencies Safely",
+          "file": "lessons/lesson-9.1.md",
+          "estimated_minutes": 75
+        },
+        {
+          "id": "9.2",
+          "order": 2,
+          "title": "Improving Images, Loading Speed and Build Quality",
+          "file": "lessons/lesson-9.2.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "9.3",
+          "order": 3,
+          "title": "Checking Page Metadata, Headings and Search Readiness",
+          "file": "lessons/lesson-9.3.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "9.4",
+          "order": 4,
+          "title": "Reviewing Git Changes, Deploying to Staging and Verifying the Result",
+          "file": "lessons/lesson-9.4.md",
+          "estimated_minutes": 105,
+          "approval": "Awaiting approval (revised 15 November 2026)"
+        }
+      ],
+      "estimated_minutes": 360
+    },
+    {
+      "unit": 10,
+      "day": 10,
+      "title": "Independent Assessment and Handover",
+      "lessons": [
+        {
+          "id": "10.1",
+          "order": 1,
+          "title": "Interpret a Change Brief and Update the Project Instructions",
+          "file": "lessons/lesson-10.1.md",
+          "estimated_minutes": 75
+        },
+        {
+          "id": "10.2",
+          "order": 2,
+          "title": "Plan and Implement the Change Independently",
+          "file": "lessons/lesson-10.2.md",
+          "estimated_minutes": 105
+        },
+        {
+          "id": "10.3",
+          "order": 3,
+          "title": "Test the Change and Submit Evidence",
+          "file": "lessons/lesson-10.3.md",
+          "estimated_minutes": 90
+        },
+        {
+          "id": "10.4",
+          "order": 4,
+          "title": "Present the Website, Known Issues and Handover",
+          "file": "lessons/lesson-10.4.md",
+          "estimated_minutes": 90
+        }
+      ],
+      "estimated_minutes": 360
+    }
+  ],
+  "awaiting_approval": [
+    "1.3",
+    "1.4",
+    "9.4"
+  ],
+  "schedule": {
+    "learning_minutes_per_day": 360,
+    "suggested_day": "09:30 to 17:00: four lessons, a 60-minute lunch and two 15-minute breaks",
+    "unlock_rule": "Day N opens on the cohort's Nth working day. All four lessons in a day open together, in a suggested order. Earlier days stay open for catching up.",
+    "durations_note": "Estimates, to be tuned after the first cohort."
+  },
+  "lesson_3_3_locked_on": "2026-11-15",
+  "lesson_1_2_revision_locked_on": "2026-11-15"
+}
