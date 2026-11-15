@@ -1,0 +1,53 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { mainNav, navCurrent } from "@/lib/nav";
+import { AccountMenu } from "./AccountMenu";
+import { Avatar } from "./Avatar";
+import { IconLink } from "./IconLink";
+import { HelpIcon } from "./icons";
+
+/**
+ * Top bar for every page except lessons. Left: the platform name in plain type (no logo
+ * exists). Centre: the four main items, always visible as text; below 1024px they move to
+ * their own full-width row. Right: Help, Settings and the learner's initials. Below 768px
+ * Settings and the initials move into the account menu; Help stays in the bar at every
+ * width because it fits. No notifications in version 1.
+ */
+export function TopBar({ brand, initials, name }: { brand: string; initials: string | null; name: string | null }) {
+  const pathname = usePathname();
+  return (
+    <header className="ob-topbar gl-topbar" data-surface="dark">
+      <Link className="ob-brand gl-topbar__brand" href="/home">
+        {brand}
+      </Link>
+      <nav className="gl-topbar__nav" aria-label="Main">
+        <ul className="ob-nav">
+          {mainNav.map((item) => {
+            const current = navCurrent(item.section, item.href, pathname);
+            return (
+              <li key={item.href}>
+                <Link href={item.href} aria-current={current || undefined}>
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+      <div className="ob-utils gl-topbar__utils">
+        <IconLink href="/help" label="Help" icon={<HelpIcon />} />
+        <Link className="ob-btn ob-btn--on-dark gl-topbar__wide" href="/settings" aria-current={pathname === "/settings" ? "page" : undefined}>
+          Settings
+        </Link>
+        <span className="gl-topbar__wide">
+          <Avatar initials={initials} name={name} />
+        </span>
+        <span className="gl-topbar__menu">
+          <AccountMenu initials={initials} name={name} />
+        </span>
+      </div>
+    </header>
+  );
+}
