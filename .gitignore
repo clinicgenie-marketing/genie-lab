@@ -24,3 +24,8 @@ blob-report/
 # Environment
 .env*.local
 .DS_Store
+
+# Local secrets (the example file is committed)
+.env
+.env.local
+!.env.example

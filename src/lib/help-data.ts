@@ -2,9 +2,10 @@
 import { getLesson } from "./content/curriculum";
 import { getIdentity } from "./identity";
 import { nextUp } from "./home";
-import { progressStore, type LessonProgress } from "./platform/progress";
+import { type LessonProgress } from "./platform/progress";
 import { getProgrammeView } from "./programme";
 import { loadSupport } from "./toolkit-config";
+import { progressStore } from "./platform/stores";
 
 export type HelpData = {
   today: { n: number; total: number; title: string } | null;

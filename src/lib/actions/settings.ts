@@ -3,7 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { auth } from "@/lib/platform/auth";
-import { settingsStore, TEXT_SIZES } from "@/lib/platform/settings";
+import { TEXT_SIZES } from "@/lib/platform/settings";
+import { settingsStore } from "@/lib/platform/stores";
 
 const Input = z.object({ name: z.string().max(80), textSize: z.enum(TEXT_SIZES), reducedMotion: z.boolean() });
 

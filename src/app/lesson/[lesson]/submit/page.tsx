@@ -5,11 +5,12 @@ import { LessonUnavailable } from "../unavailable";
 import { reviewPointFor } from "@/lib/config";
 import { inlineText } from "@/lib/content/text";
 import { auth } from "@/lib/platform/auth";
-import { emptyWork, workStore } from "@/lib/platform/work";
+import { emptyWork } from "@/lib/platform/work";
 import { latestSubmission, nextVersion, reviewState } from "@/lib/work-rules";
 import { Blocks } from "@/components/content/Blocks";
 import { EvidenceForm, type FormItem, type ItemValue } from "@/components/work/EvidenceForm";
 import { ReviewTag } from "@/components/StatusBadges";
+import { workStore } from "@/lib/platform/stores";
 
 export const generateMetadata = lessonMetadata("Submit evidence");
 

@@ -3,8 +3,8 @@ import { getLessonBySlug, lessonIdToSlug, lessons } from "@/lib/content/curricul
 import { getLessonAccess, type LessonAccess } from "@/lib/lesson-access";
 import type { LessonProgress } from "@/lib/platform/progress";
 import { auth } from "@/lib/platform/auth";
-import { progressStore } from "@/lib/platform/progress";
 import type { Prerequisite } from "@/components/lesson/LessonReader";
+import { progressStore } from "@/lib/platform/stores";
 
 export type LoadedLesson =
   | { access: Extract<LessonAccess, { kind: "coming_soon" | "locked" }> }

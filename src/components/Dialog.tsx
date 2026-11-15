@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { trapTab } from "@/lib/hooks/trapTab";
+import { returnTarget, trackLastPressed } from "@/lib/hooks/lastPressed";
 
 /**
  * A centred modal dialog for confirmations only, never for moving between pages.
@@ -12,11 +13,13 @@ export function Dialog({ open, onClose, title, children, busy = false }: { open:
   const returnTo = useRef<HTMLElement | null>(null);
   const titleId = useId();
 
+  useEffect(() => trackLastPressed(), []);
+
   useEffect(() => {
     const d = ref.current;
     if (!d) return;
     if (open && !d.open) {
-      returnTo.current = document.activeElement as HTMLElement | null;
+      returnTo.current = returnTarget();
       d.showModal();
     } else if (!open && d.open) {
       d.close();
@@ -30,7 +33,8 @@ export function Dialog({ open, onClose, title, children, busy = false }: { open:
       aria-labelledby={titleId}
       onClose={() => {
         onClose();
-        returnTo.current?.focus();
+        // Return focus without scrolling, so closing keeps the reader's place on the page.
+        returnTo.current?.focus({ preventScroll: true });
       }}
       onCancel={(e) => {
         e.preventDefault();

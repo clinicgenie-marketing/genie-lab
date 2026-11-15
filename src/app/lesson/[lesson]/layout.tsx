@@ -8,6 +8,7 @@ import { LessonBar } from "@/components/LessonBar";
 import { LessonNavProvider } from "@/components/lesson/LessonContext";
 import type { OutlineData } from "@/components/lesson/OutlineNav";
 import { getHelpData } from "@/lib/help-data";
+import { requireIntern } from "@/lib/identity";
 import { HelpProvider } from "@/components/help/HelpContext";
 
 export const dynamicParams = false;
@@ -19,6 +20,7 @@ export default async function LessonLayout({ children, params }: { children: Rea
   const summary = getLessonBySlug((await params).lesson);
   if (!summary) notFound();
   await connection();
+  await requireIntern();
   const programme = await getProgrammeView();
   const day = programme.days.find((d) => d.n === summary.day)!;
   const lesson = getLesson(summary.id);

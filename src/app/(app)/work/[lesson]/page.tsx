@@ -5,13 +5,14 @@ import { notFound } from "next/navigation";
 import { reviewPointFor } from "@/lib/config";
 import { getLesson, getLessonBySlug, lessons } from "@/lib/content/curriculum";
 import { auth } from "@/lib/platform/auth";
-import { emptyWork, workStore } from "@/lib/platform/work";
+import { emptyWork } from "@/lib/platform/work";
 import { decisionsFor, reviewState, submissionsFor } from "@/lib/work-rules";
 import { PageHeader } from "@/components/PageHeader";
 import { ReviewTag, SubmissionBadge } from "@/components/StatusBadges";
 import { dateTime, EvidenceView } from "@/components/work/EvidenceView";
 import { ReviewForm } from "@/components/work/ReviewForm";
 import { SharePanel } from "@/components/work/SharePanel";
+import { workStore } from "@/lib/platform/stores";
 
 type Props = { params: Promise<{ lesson: string }>; searchParams: Promise<{ submitted?: string }> };
 

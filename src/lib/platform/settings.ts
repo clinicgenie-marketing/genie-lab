@@ -43,5 +43,3 @@ export class LocalJsonSettingsStore implements SettingsStore {
   }
 }
 
-const g = globalThis as unknown as { __genieSettings?: SettingsStore };
-export const settingsStore: SettingsStore = (g.__genieSettings ??= new LocalJsonSettingsStore());

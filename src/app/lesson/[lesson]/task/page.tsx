@@ -4,9 +4,10 @@ import { LessonUnavailable } from "../unavailable";
 import { lessons } from "@/lib/content/curriculum";
 import { checkState } from "@/lib/lesson-state";
 import { auth } from "@/lib/platform/auth";
-import { emptyWork, workStore } from "@/lib/platform/work";
+import { emptyWork } from "@/lib/platform/work";
 import { latestSubmission } from "@/lib/work-rules";
 import { TaskPageClient } from "./TaskPageClient";
+import { workStore } from "@/lib/platform/stores";
 
 export const generateMetadata = lessonMetadata("Your task");
 

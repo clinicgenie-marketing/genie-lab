@@ -56,7 +56,7 @@ export const ReviewDecisionSchema = z.object({
 });
 export type ReviewDecision = z.infer<typeof ReviewDecisionSchema>;
 
-export const ShareSchema = z.object({ token: z.string().regex(/^[A-Za-z0-9_-]{32}$/), lessonId: LessonId, createdAt: z.string(), revokedAt: z.string().nullable() });
+export const ShareSchema = z.object({ token: z.string().regex(/^[A-Za-z0-9_-]{32}$/), lessonId: LessonId, createdAt: z.iso.datetime(), revokedAt: z.iso.datetime().nullable() });
 export type Share = z.infer<typeof ShareSchema>;
 
 export const WorkSchema = z.object({
@@ -115,5 +115,3 @@ export class LocalJsonWorkStore implements WorkStore {
   }
 }
 
-const g = globalThis as unknown as { __genieWork?: WorkStore };
-export const workStore: WorkStore = (g.__genieWork ??= new LocalJsonWorkStore());

@@ -26,5 +26,12 @@ Decisions that settle conflicts between the design system (`design-system/README
 | 5 | Breakpoints | Layout changes at 1280 and 1024 px (IA plan). Frame, type scale and gutters change at 1200 and 768 px (design system). At 720 px: one column, `-sm` type styles, `gutter-mobile` |
 | 6 | Submission badge | Evidence from lessons that are not review points shows "Submitted" (`lavender`) |
 | 7 | Welcome tour | Four steps following the IA plan ("Step 1 of 4"), with Skip tour |
-| 8 | Sign in and Sign out | No sign-in page and no Sign out in version 1 |
+| 8 | Sign in and Sign out | ~~No sign-in page and no Sign out in version 1~~ Reversed during Phase 6: students sign in with an email and password and can sign out from Settings (see 10) |
 | 9 | Design system source | `design-system/` holds a read-only snapshot of the Intern Onboarding design system artifact (version `1794732072-685e`): `README.md` plus `tokens.json` and `bundle.css` copied byte for byte |
+
+## Settled during Phase 6
+
+| # | Topic | Decision |
+|---|---|---|
+| 10 | Student accounts and storage | Progress is saved in Neon against each student's account and retrieved when they sign in again. Sign-in is email and password with Better Auth, accounts stored in Neon, no public sign-up: supervisors create accounts with `npm run create-intern`. Everything a student does is stored in Neon: lesson progress, submissions and versions, recorded review decisions, share links, knowledge check answers, settings, and evidence files (in a table, up to 10 MB each, until a file store is chosen). Without `DATABASE_URL` the app keeps its local development mode |
+| 11 | Lesson bar | Sticky from 1024px so Help, Outline and the section position stay in view and opening Help never costs the reader their place. Not sticky below 1024px, where the bar wraps to three rows |
